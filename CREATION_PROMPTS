@@ -1,0 +1,3429 @@
+New chat
+Tech event Scraper v2
+Shared by Jon
+
+This is a copy of a chat between Claude and Jon. Content may include unverified or unsafe content that do not represent the views of Anthropic. Shared snapshot may contain attachments and data not displayed here.
+
+I want to build a simple webscraper to periodically check a short list of websites for upcoming local tech events.  It should pull results and merge  duplicates, and categorize them with colors  for hackathons, coding hangouts, marketing, demos, or VC/pitch.  Then output a list sorted by type and date, also containing location (color coded to highlight SF events).
+I want it coded in Python with Flask
+Can you output instruction list for setting this up in Claude Code in Cursor?  i'll give it the list of sites
+
+Before I create the instruction list, I have a few clarifying questions to ensure the setup will work well for your needs:
+
+    Website scraping approach: Do you want to scrape specific HTML elements from these sites (which would require custom selectors for each site), or would you prefer a more general approach that extracts event-like content using patterns/heuristics? Or do these sites have RSS feeds/APIs?
+    Data storage: Should the scraper store historical events in a database (SQLite, PostgreSQL) or just work with in-memory data/JSON files? This affects duplicate detection across scraping sessions.
+    Categorization logic: How should the scraper determine event categories (hackathons, coding hangouts, etc.)? Should it:
+        Use keyword matching in event titles/descriptions?
+        Let you manually categorize?
+        Use an LLM API for classification?
+    Flask interface: What should the Flask app do?
+        Display scraped events in a web page?
+        Provide a simple dashboard with refresh capability?
+        API endpoints only?
+    Scheduling: Should the periodic scraping be:
+        Manual (you trigger it)?
+        Automated with cron/scheduler?
+        Background task within Flask?
+    Duplicate detection: What makes events duplicates - same title + date? Same title + location? Different criteria?
+
+These answers will help me tailor the instructions specifically for your use case and avoid unnecessary complexity.
+
+1) I don't know.  You can help me decide by analyzing the website list.
+2) I'd like to store in a local PostgreSQL for future analysis
+3) let's try keyword matching first.  I'm hoping that can at least match hackathons and obvious VC events (mentioning 'founders' or 'VC' > 2 or 3 times).  I'll reassess after testing.
+4) what do you mean by API endpoints only?  I want the results displayed with drop-down menus for details, and clickable to link to the event pages.  Also, store the data as JSON, and also in the postgresql file (delay this so as to not slow down loading of the displayed data).
+5) It could autorun somewhere between daily to weekly if left open, otherwise runs when opened.
+6) title+date
+
+Great, this helps clarify things! Before I create the instructions, let me address your question and get the website list:
+
+Re: API endpoints only - That would mean Flask just returns raw data (JSON) without any HTML interface. But you want a proper web interface with interactive elements, so we'll build a full web app with HTML/CSS/JS. ✓
+
+Website List Needed: Please share the list of websites you want to scrape so I can:
+
+    Analyze their structure (HTML vs RSS vs API)
+    Determine the best scraping strategy for each
+    Identify common patterns for event extraction
+    Check if they have anti-scraping measures
+
+Once you provide the URLs, I'll analyze them and create a comprehensive instruction list for Claude Code in Cursor that includes:
+
+    Project structure setup
+    Flask app with web interface (dropdowns, clickable links)
+    PostgreSQL database schema
+    Scraper logic tailored to your specific sites
+    Keyword-based categorization system
+    Duplicate detection (title+date)
+    Background task scheduling
+    JSON export functionality
+    Color-coding for event types and SF locations
+
+Go ahead and paste the website URLs whenever you're ready!
+
+Initial list:
+www.garysguide.com/events?region=sf   Gary's Guide
+agendahero.com/schedule/sf-and-bay-area-ai-events-0f8899a0-3dbc-4d6a-ad05-58225b751316?view=month
+cerebralvalley.ai/events
+luma.com/home
+www.meetup.com/find/?keywords=tech+&location=us--ca--San+Francisco&source=EVENTS
+www.eventbrite.com/d/ca--san-francisco/tech/
+https://kyosuketogami.substack.com/
+
+Let me analyze these websites to determine the best scraping approach for each:
+Website Analysis Complete
+
+Here's my assessment of each site and recommended scraping strategy:
+Recommended Approaches:
+
+    Gary's Guide ✅ HTML Scraping - EASY
+        Clean, structured HTML with event data
+        Contains: title, date, time, location, price, speakers
+        Best approach: BeautifulSoup with specific selectors
+    Agenda Hero ⚠️ JavaScript-Rendered - MEDIUM
+        Appears to be a React/SPA (content didn't load in basic fetch)
+        Will need: Selenium or Playwright for browser automation
+        Alternative: Check if they have an API endpoint
+    Cerebral Valley ⚠️ JavaScript-Rendered - MEDIUM
+        Minimal content loaded (React/Next.js site)
+        Will need: Selenium/Playwright OR check for API endpoints
+    Luma ❌ Cannot Access
+        Generic homepage, need specific event URLs
+        Suggestion: Either get specific Luma event feed URLs or skip this
+    Meetup ✅ HTML Scraping - MEDIUM
+        Loaded content visible
+        Will need careful selector work
+        Note: Meetup may have anti-scraping measures
+    Eventbrite ❌ Fetch Error
+        May have anti-scraping protection
+        Recommendation: Use Selenium OR check if they have an API
+    Kyosuke's Substack 📧 Newsletter - MANUAL
+        This is a paid newsletter, not a scrapable event list
+        Recommendation: Skip or manually add events from newsletters
+
+My Recommendations:
+
+Tier 1 (Start Here):
+
+    Gary's Guide (easy HTML scraping)
+    Meetup (HTML scraping with anti-detection headers)
+
+Tier 2 (Add Later with Selenium):
+
+    Cerebral Valley
+    Agenda Hero
+    Eventbrite
+
+Skip/Replace:
+
+    Luma (need specific URLs)
+    Kyosuke's Substack (not scrapable)
+
+Should I proceed with instructions focusing on Tier 1 sites first (Gary's Guide + Meetup), with architecture that can easily add Tier 2 sites later using Selenium?
+
+Or would you prefer me to include full Selenium setup from the start for all sites?
+
+    Luma:  retry luma.com/ai and luma.com/tech .  If those don't work I have login info 
+    skip
+
+Great! I found several relevant Luma calendar URLs. Let me try fetching them:
+Updated Website Analysis
+
+Luma calendars discovered:
+
+    luma.com/genai-sf - Generative AI SF & Bay Area (60k+ community)
+    luma.com/ai-events - AI Events calendar
+    luma.com/ai-sf - AI Events - San Francisco
+
+These are all JavaScript-rendered (React/Next.js), so they'll need Selenium/Playwright to scrape.
+Final Recommended Site List:
+Tier 1 - Start with these (HTML scraping):
+
+    ✅ Gary's Guide - www.garysguide.com/events?region=sf
+
+Tier 2 - Add with Selenium (JS-rendered):
+
+    ⚠️ Luma - GenAI SF - luma.com/genai-sf
+    ⚠️ Luma - AI Events - luma.com/ai-events
+    ⚠️ Cerebral Valley - cerebralvalley.ai/events
+    ⚠️ Agenda Hero - agendahero.com/schedule/sf-and-bay-area-ai-events-0f8899a0-3dbc-4d6a-ad05-58225b751316?view=month
+    ⚠️ Meetup - www.meetup.com/find/?keywords=tech+&location=us--ca--San+Francisco&source=EVENTS
+    ⚠️ Eventbrite - www.eventbrite.com/d/ca--san-francisco/tech/
+
+Skipped:
+
+    ❌ Kyosuke's Substack (newsletter, not scrapable)
+
+Should I create the instructions with:
+
+    Phase 1: Gary's Guide only (fast MVP to test categorization/display)
+    Phase 2: Add Selenium for all other sites
+
+OR build everything with Selenium from the start?
+
+Which approach do you prefer?
+
+quickly look for api endpoints for CV and AgendaHero
+API Search Results:
+Cerebral Valley:
+
+    ❌ No public API found
+    They have a Luma calendar: luma.com/cerebralvalley_
+    Best approach: Scrape their main events page OR use their Luma calendar
+
+Agenda Hero:
+
+    ❌ No public API found
+    Agenda Hero is actually a tool that converts text/PDFs to calendar events (they're not an events listing service)
+    The URL you provided appears to be a public schedule created by someone using Agenda Hero
+    Best approach: Scrape the HTML of that specific schedule page
+
+Final Recommendation:
+
+Since neither has a public API, here's the updated strategy:
+Phase 1 - HTML Scraping (Start Here):
+
+    ✅ Gary's Guide - www.garysguide.com/events?region=sf
+    ✅ Agenda Hero schedule - agendahero.com/schedule/sf-and-bay-area-ai-events-...
+
+Phase 2 - Selenium/Playwright (Add Later):
+
+    ⚠️ Cerebral Valley - cerebralvalley.ai/events OR luma.com/cerebralvalley_
+    ⚠️ Luma calendars:
+        luma.com/genai-sf
+        luma.com/ai-events
+    ⚠️ Meetup - www.meetup.com/find/?keywords=tech+&location=us--ca--San+Francisco
+    ⚠️ Eventbrite - www.eventbrite.com/d/ca--san-francisco/tech/
+
+Ready to create the Claude Code instructions? I recommend:
+
+    Start with Phase 1 (Gary's Guide + Agenda Hero) for quick MVP
+    Architecture designed to easily add Phase 2 sites later
+
+Should I proceed?
+
+Let's do 2 phases
+Claude Code Instructions for Tech Events Scraper
+Project Overview
+
+Build a Flask web scraper that collects tech events from multiple websites, categorizes them, detects duplicates, and displays them in an interactive web interface with color-coded categories and locations.
+PHASE 1: Core System with HTML Scraping
+Step 1: Project Setup
+bash
+
+# Create project directory
+mkdir tech-events-scraper
+cd tech-events-scraper
+
+# Initialize Python virtual environment with uv
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install Phase 1 dependencies
+uv pip install flask beautifulsoup4 requests psycopg2-binary python-dateutil
+
+Step 2: PostgreSQL Database Setup
+
+Create database/schema.sql:
+sql
+
+CREATE TABLE IF NOT EXISTS events (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    event_date DATE NOT NULL,
+    event_time TIME,
+    location VARCHAR(500),
+    url VARCHAR(1000) UNIQUE,
+    description TEXT,
+    category VARCHAR(50),
+    source VARCHAR(100),
+    price VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(title, event_date)
+);
+
+CREATE INDEX idx_event_date ON events(event_date);
+CREATE INDEX idx_category ON events(category);
+CREATE INDEX idx_source ON events(source);
+
+Initialize database:
+bash
+
+# Create database
+createdb tech_events
+
+# Run schema
+psql tech_events < database/schema.sql
+
+Step 3: Database Configuration
+
+Create config.py:
+python
+
+import os
+
+class Config:
+    # PostgreSQL connection
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
+    DB_NAME = os.getenv('DB_NAME', 'tech_events')
+    DB_USER = os.getenv('DB_USER', 'postgres')
+    DB_PASSWORD = os.getenv('DB_PASSWORD', '')
+    DB_PORT = os.getenv('DB_PORT', '5432')
+    
+    # Scraping settings
+    REQUEST_TIMEOUT = 10
+    USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+    
+    # Category keywords
+    CATEGORY_KEYWORDS = {
+        'hackathon': ['hackathon', 'hack night', 'hacknight', 'buildathon'],
+        'coding_hangout': ['meetup', 'coworking', 'coffee', 'networking', 'hangout', 'social'],
+        'marketing': ['marketing', 'growth', 'seo', 'content', 'branding'],
+        'demo': ['demo day', 'demo', 'pitch day', 'showcase', 'product launch'],
+        'vc_pitch': ['vc', 'venture capital', 'founder', 'investors', 'pitch', 'funding']
+    }
+    
+    # SF location keywords
+    SF_LOCATIONS = ['san francisco', 'sf', 'soma', 'mission', 'hayes valley', 
+                    'financial district', 'fidi', 'tenderloin', 'nob hill']
+
+Step 4: Database Helper
+
+Create database/db_helper.py:
+python
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from config import Config
+from contextlib import contextmanager
+
+@contextmanager
+def get_db_connection():
+    """Context manager for database connections"""
+    conn = psycopg2.connect(
+        host=Config.DB_HOST,
+        database=Config.DB_NAME,
+        user=Config.DB_USER,
+        password=Config.DB_PASSWORD,
+        port=Config.DB_PORT
+    )
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def insert_event(event_data):
+    """Insert event into database, ignore duplicates"""
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            try:
+                cur.execute("""
+                    INSERT INTO events (title, event_date, event_time, location, url, 
+                                      description, category, source, price)
+                    VALUES (%(title)s, %(event_date)s, %(event_time)s, %(location)s, 
+                           %(url)s, %(description)s, %(category)s, %(source)s, %(price)s)
+                    ON CONFLICT (title, event_date) DO UPDATE 
+                    SET updated_at = CURRENT_TIMESTAMP
+                    RETURNING id;
+                """, event_data)
+                conn.commit()
+                return cur.fetchone()[0]
+            except Exception as e:
+                conn.rollback()
+                print(f"Error inserting event: {e}")
+                return None
+
+def get_all_events():
+    """Retrieve all events ordered by date and category"""
+    with get_db_connection() as conn:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("""
+                SELECT * FROM events 
+                WHERE event_date >= CURRENT_DATE
+                ORDER BY category, event_date, event_time
+            """)
+            return cur.fetchall()
+
+def clear_old_events():
+    """Remove events older than 30 days"""
+    with get_db_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                DELETE FROM events 
+                WHERE event_date < CURRENT_DATE - INTERVAL '30 days'
+            """)
+            conn.commit()
+
+Step 5: Categorization Logic
+
+Create scrapers/categorizer.py:
+python
+
+from config import Config
+
+def categorize_event(title, description=''):
+    """Categorize event based on keywords in title and description"""
+    text = f"{title} {description}".lower()
+    
+    # Count keyword matches for each category
+    scores = {}
+    for category, keywords in Config.CATEGORY_KEYWORDS.items():
+        scores[category] = sum(1 for keyword in keywords if keyword in text)
+    
+    # Special case: VC/Pitch needs multiple founder/VC mentions
+    if 'vc_pitch' in scores:
+        founder_vc_count = text.count('founder') + text.count('vc') + text.count('venture')
+        if founder_vc_count < 2:
+            scores['vc_pitch'] = 0
+    
+    # Return category with highest score, or 'other'
+    if max(scores.values()) > 0:
+        return max(scores, key=scores.get)
+    return 'other'
+
+def is_sf_location(location):
+    """Check if location is in San Francisco"""
+    if not location:
+        return False
+    location_lower = location.lower()
+    return any(sf_keyword in location_lower for sf_keyword in Config.SF_LOCATIONS)
+
+Step 6: Gary's Guide Scraper
+
+Create scrapers/garys_guide.py:
+python
+
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser
+from config import Config
+from scrapers.categorizer import categorize_event
+
+def scrape_garys_guide():
+    """Scrape events from Gary's Guide"""
+    url = "https://www.garysguide.com/events?region=sf"
+    
+    headers = {'User-Agent': Config.USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=Config.REQUEST_TIMEOUT)
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.content, 'html.parser')
+    events = []
+    
+    # Find all event rows (adjust selectors based on actual HTML structure)
+    event_rows = soup.find_all('tr')  # Adjust this selector
+    
+    for row in event_rows:
+        try:
+            # Extract event details (customize based on actual HTML)
+            title_elem = row.find('a')
+            if not title_elem:
+                continue
+                
+            title = title_elem.get_text(strip=True)
+            event_url = 'https://www.garysguide.com' + title_elem.get('href', '')
+            
+            # Extract date/time
+            date_elem = row.find(class_='date')  # Adjust selector
+            location_elem = row.find(class_='location')  # Adjust selector
+            price_elem = row.find(class_='price')  # Adjust selector
+            
+            # Parse date
+            event_date = None
+            event_time = None
+            if date_elem:
+                date_text = date_elem.get_text(strip=True)
+                try:
+                    dt = parser.parse(date_text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+            
+            location = location_elem.get_text(strip=True) if location_elem else ''
+            price = price_elem.get_text(strip=True) if price_elem else 'Free'
+            
+            # Categorize
+            category = categorize_event(title)
+            
+            events.append({
+                'title': title,
+                'event_date': event_date,
+                'event_time': event_time,
+                'location': location,
+                'url': event_url,
+                'description': '',
+                'category': category,
+                'source': 'Gary\'s Guide',
+                'price': price
+            })
+            
+        except Exception as e:
+            print(f"Error parsing event: {e}")
+            continue
+    
+    return events
+
+Step 7: Agenda Hero Scraper
+
+Create scrapers/agenda_hero.py:
+python
+
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser
+from config import Config
+from scrapers.categorizer import categorize_event
+
+def scrape_agenda_hero():
+    """Scrape events from Agenda Hero SF/Bay Area AI Events"""
+    url = "https://agendahero.com/schedule/sf-and-bay-area-ai-events-0f8899a0-3dbc-4d6a-ad05-58225b751316?view=month"
+    
+    headers = {'User-Agent': Config.USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=Config.REQUEST_TIMEOUT)
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.content, 'html.parser')
+    events = []
+    
+    # Find all event elements (adjust selectors based on actual HTML)
+    event_items = soup.find_all(class_='event-item')  # Adjust selector
+    
+    for item in event_items:
+        try:
+            title_elem = item.find('h3') or item.find('a')  # Adjust
+            if not title_elem:
+                continue
+                
+            title = title_elem.get_text(strip=True)
+            event_url = title_elem.get('href', '') if title_elem.name == 'a' else ''
+            
+            # Extract other details
+            date_elem = item.find(class_='date')  # Adjust
+            time_elem = item.find(class_='time')  # Adjust
+            location_elem = item.find(class_='location')  # Adjust
+            
+            event_date = None
+            event_time = None
+            if date_elem:
+                try:
+                    dt = parser.parse(date_elem.get_text(strip=True), fuzzy=True)
+                    event_date = dt.date()
+                except:
+                    pass
+            
+            if time_elem:
+                try:
+                    dt = parser.parse(time_elem.get_text(strip=True), fuzzy=True)
+                    event_time = dt.time()
+                except:
+                    pass
+            
+            location = location_elem.get_text(strip=True) if location_elem else ''
+            category = categorize_event(title)
+            
+            events.append({
+                'title': title,
+                'event_date': event_date,
+                'event_time': event_time,
+                'location': location,
+                'url': event_url,
+                'description': '',
+                'category': category,
+                'source': 'Agenda Hero',
+                'price': 'Free'
+            })
+            
+        except Exception as e:
+            print(f"Error parsing event: {e}")
+            continue
+    
+    return events
+
+Step 8: Main Scraper Orchestrator
+
+Create scrapers/scraper.py:
+python
+
+from scrapers.garys_guide import scrape_garys_guide
+from scrapers.agenda_hero import scrape_agenda_hero
+from database.db_helper import insert_event, clear_old_events
+
+def run_all_scrapers():
+    """Run all scrapers and store results"""
+    print("Starting scraper run...")
+    
+    # Clear old events first
+    clear_old_events()
+    
+    all_events = []
+    
+    # Phase 1 scrapers
+    try:
+        print("Scraping Gary's Guide...")
+        events = scrape_garys_guide()
+        all_events.extend(events)
+        print(f"Found {len(events)} events from Gary's Guide")
+    except Exception as e:
+        print(f"Error scraping Gary's Guide: {e}")
+    
+    try:
+        print("Scraping Agenda Hero...")
+        events = scrape_agenda_hero()
+        all_events.extend(events)
+        print(f"Found {len(events)} events from Agenda Hero")
+    except Exception as e:
+        print(f"Error scraping Agenda Hero: {e}")
+    
+    # Insert into database
+    inserted = 0
+    for event in all_events:
+        if event['event_date']:  # Only insert if we have a valid date
+            if insert_event(event):
+                inserted += 1
+    
+    print(f"Inserted/updated {inserted} events")
+    return inserted
+
+Step 9: Flask Application
+
+Create app.py:
+python
+
+from flask import Flask, render_template, jsonify
+from database.db_helper import get_all_events
+from scrapers.scraper import run_all_scrapers
+from scrapers.categorizer import is_sf_location
+import json
+from datetime import datetime
+from threading import Thread
+
+app = Flask(__name__)
+
+# Category colors
+CATEGORY_COLORS = {
+    'hackathon': '#FF6B6B',      # Red
+    'coding_hangout': '#4ECDC4', # Teal
+    'marketing': '#FFE66D',      # Yellow
+    'demo': '#95E1D3',           # Mint
+    'vc_pitch': '#C7CEEA',       # Purple
+    'other': '#CCCCCC'           # Gray
+}
+
+def export_to_json(events):
+    """Export events to JSON file"""
+    events_list = []
+    for event in events:
+        event_dict = dict(event)
+        # Convert date/time to strings
+        if event_dict.get('event_date'):
+            event_dict['event_date'] = event_dict['event_date'].isoformat()
+        if event_dict.get('event_time'):
+            event_dict['event_time'] = event_dict['event_time'].isoformat()
+        if event_dict.get('created_at'):
+            event_dict['created_at'] = event_dict['created_at'].isoformat()
+        if event_dict.get('updated_at'):
+            event_dict['updated_at'] = event_dict['updated_at'].isoformat()
+        events_list.append(event_dict)
+    
+    with open('static/events_export.json', 'w') as f:
+        json.dump(events_list, f, indent=2)
+
+@app.route('/')
+def index():
+    """Main page displaying events"""
+    events = get_all_events()
+    
+    # Add color and SF indicator to each event
+    for event in events:
+        event['color'] = CATEGORY_COLORS.get(event['category'], '#CCCCCC')
+        event['is_sf'] = is_sf_location(event.get('location', ''))
+    
+    # Group by category
+    events_by_category = {}
+    for event in events:
+        category = event['category']
+        if category not in events_by_category:
+            events_by_category[category] = []
+        events_by_category[category].append(event)
+    
+    # Export to JSON in background
+    Thread(target=export_to_json, args=(events,)).start()
+    
+    return render_template('index.html', 
+                         events_by_category=events_by_category,
+                         category_colors=CATEGORY_COLORS)
+
+@app.route('/refresh')
+def refresh():
+    """Trigger scraper refresh"""
+    def scrape_async():
+        run_all_scrapers()
+    
+    Thread(target=scrape_async).start()
+    return jsonify({'status': 'Scraping started'})
+
+@app.route('/api/events')
+def api_events():
+    """API endpoint to get all events"""
+    events = get_all_events()
+    # Convert to JSON-serializable format
+    events_list = []
+    for event in events:
+        event_dict = dict(event)
+        if event_dict.get('event_date'):
+            event_dict['event_date'] = event_dict['event_date'].isoformat()
+        if event_dict.get('event_time'):
+            event_dict['event_time'] = event_dict['event_time'].isoformat()
+        events_list.append(event_dict)
+    return jsonify(events_list)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+
+Step 10: HTML Template
+
+Create templates/index.html:
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Events Scraper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .category-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .category-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .category-title {
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .event-card {
+            border-left: 4px solid;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fafafa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .event-card:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+        
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+        }
+        
+        .event-title a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .event-title a:hover {
+            color: #007bff;
+        }
+        
+        .sf-badge {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+        
+        .event-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .event-details.show {
+            display: block;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Tech Events Scraper</h1>
+            <p>Upcoming tech events in the SF Bay Area</p>
+            
+            <div class="legend">
+                {% for category, color in category_colors.items() %}
+                <div class="legend-item">
+                    <div class="legend-color" style="background: {{ color }}"></div>
+                    <span>{{ category.replace('_', ' ').title() }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="controls">
+                <button onclick="refreshEvents()">🔄 Refresh Events</button>
+                <a href="/static/events_export.json" download>
+                    <button>📥 Download JSON</button>
+                </a>
+            </div>
+        </header>
+        
+        {% for category, events in events_by_category.items() %}
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-indicator" style="background: {{ category_colors[category] }}"></div>
+                <h2 class="category-title">{{ category.replace('_', ' ') }}</h2>
+                <span style="color: #999; margin-left: auto;">({{ events|length }} events)</span>
+            </div>
+            
+            {% for event in events %}
+            <div class="event-card" style="border-left-color: {{ event.color }}" onclick="toggleDetails(this)">
+                <div class="event-header">
+                    <div class="event-title">
+                        <a href="{{ event.url }}" target="_blank" onclick="event.stopPropagation()">
+                            {{ event.title }}
+                        </a>
+                        {% if event.is_sf %}
+                        <span class="sf-badge">SF</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="event-meta">
+                    <div class="meta-item">
+                        📅 {{ event.event_date.strftime('%b %d, %Y') }}
+                    </div>
+                    {% if event.event_time %}
+                    <div class="meta-item">
+                        🕐 {{ event.event_time.strftime('%I:%M %p') }}
+                    </div>
+                    {% endif %}
+                    <div class="meta-item">
+                        🏢 {{ event.source }}
+                    </div>
+                    {% if event.price %}
+                    <div class="meta-item">
+                        💵 {{ event.price }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="event-details">
+                    {% if event.location %}
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+                    {% endif %}
+                    {% if event.description %}
+                    <p><strong>Description:</strong> {{ event.description }}</p>
+                    {% endif %}
+                    <p><strong>Link:</strong> <a href="{{ event.url }}" target="_blank">{{ event.url }}</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        {% if not events_by_category %}
+        <div class="loading">
+            No events found. Click "Refresh Events" to start scraping.
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function toggleDetails(card) {
+            const details = card.querySelector('.event-details');
+            details.classList.toggle('show');
+        }
+        
+        function refreshEvents() {
+            if (confirm('This will scrape all websites. Continue?')) {
+                fetch('/refresh')
+                    .then(r => r.json())
+                    .then(data => {
+                        alert('Scraping started! Page will reload in 10 seconds.');
+                        setTimeout(() => location.reload(), 10000);
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
+
+Step 11: Create Directory Structure
+bash
+
+mkdir -p templates static database scrapers
+touch scrapers/__init__.py database/__init__.py
+
+Step 12: Test & Run Phase 1
+bash
+
+# Run the scraper manually first
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers()"
+
+# Start Flask app
+python app.py
+
+Open browser to http://localhost:5000
+PHASE 2: Add Selenium for JavaScript-Heavy Sites
+Step 13: Install Selenium Dependencies
+bash
+
+uv pip install selenium webdriver-manager
+
+Step 14: Selenium Base Scraper
+
+Create scrapers/selenium_base.py:
+python
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+from config import Config
+
+def get_selenium_driver():
+    """Initialize Selenium WebDriver with headless Chrome"""
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument(f'user-agent={Config.USER_AGENT}')
+    
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
+
+def wait_for_element(driver, selector, by=By.CSS_SELECTOR, timeout=10):
+    """Wait for element to be present"""
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((by, selector))
+    )
+
+Step 15: Luma Scraper
+
+Create scrapers/luma.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver, wait_for_element
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_luma_calendar(calendar_url, source_name):
+    """Scrape events from a Luma calendar"""
+    driver = get_selenium_driver()
+    events = []
+    
+    try:
+        driver.get(calendar_url)
+        time.sleep(3)  # Wait for JS to load
+        
+        # Find event elements (adjust selectors based on actual Luma HTML)
+        event_elements = driver.find_elements(By.CSS_SELECTOR, '.event-card')  # Adjust
+        
+        for elem in event_elements:
+            try:
+                title = elem.find_element(By.CSS_SELECTOR, '.event-title').text  # Adjust
+                url = elem.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+                
+                # Extract date/time
+                date_text = elem.find_element(By.CSS_SELECTOR, '.event-date').text  # Adjust
+                location_text = elem.find_element(By.CSS_SELECTOR, '.event-location').text  # Adjust
+                
+                event_date = None
+                event_time = None
+                try:
+                    dt = parser.parse(date_text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+                
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location_text,
+                    'url': url,
+                    'description': '',
+                    'category': category,
+                    'source': source_name,
+                    'price': 'Free'
+                })
+            except Exception as e:
+                print(f"Error parsing Luma event: {e}")
+                continue
+                
+    finally:
+        driver.quit()
+    
+    return events
+
+def scrape_luma_genai_sf():
+    """Scrape Luma GenAI SF calendar"""
+    return scrape_luma_calendar('https://luma.com/genai-sf', 'Luma - GenAI SF')
+
+def scrape_luma_ai_events():
+    """Scrape Luma AI Events calendar"""
+    return scrape_luma_calendar('https://luma.com/ai-events', 'Luma - AI Events')
+
+Step 16: Cerebral Valley Scraper
+
+Create scrapers/cerebral_valley.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver, wait_for_element
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_cerebral_valley():
+    """Scrape events from Cerebral Valley"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://cerebralvalley.ai/events"
+    
+    try:
+        driver.get(url)
+        time.sleep(3)
+        
+        # Adjust selectors based on actual HTML
+        event_cards = driver.find_elements(By.CSS_SELECTOR, '.event-card')  # Adjust
+        
+        for card in event_cards:
+            try:
+                title = card.find_element(By.CSS_SELECTOR, 'h3').text  # Adjust
+                event_url = card.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+                date_text = card.find_element(By.CSS_SELECTOR, '.date').text  # Adjust
+                location = card.find_element(By.CSS_SELECTOR, '.location').text  # Adjust
+                
+                event_date = None
+                event_time = None
+                try:
+                    dt = parser.parse(date_text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+                
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': event_url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Cerebral Valley',
+                    'price': 'Free'
+                })
+            except Exception as e:
+                print(f"Error parsing CV event: {e}")
+                continue
+                
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 17: Meetup Scraper
+
+Create scrapers/meetup.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_meetup():
+    """Scrape tech events from Meetup"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://www.meetup.com/find/?keywords=tech+&location=us--ca--San+Francisco&source=EVENTS"
+    
+    try:
+        driver.get(url)
+        time.sleep(5)  # Meetup is slow to load
+        
+        # Scroll to load more events
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        
+        event_cards = driver.find_elements(By.CSS_SELECTOR, '[data-testid="event-card"]')  # Adjust
+        
+        for card in event_cards[:20]:  # Limit to 20 events
+            try:
+                title_elem = card.find_element(By.CSS_SELECTOR, 'h3')
+                title = title_elem.text
+                event_url = card.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+                
+                # Extract date and location
+                date_elem = card.find_element(By.CSS_SELECTOR, '[data-testid="event-time"]')  # Adjust
+                location_elem = card.find_element(By.CSS_SELECTOR, '[data-testid="event-location"]')  # Adjust
+                
+                event_date = None
+                event_time = None
+                try:
+                    dt = parser.parse(date_elem.text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+                
+                location = location_elem.text if location_elem else ''
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': event_url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Meetup',
+                    'price': 'Free'
+                })
+            except Exception as e:
+                print(f"Error parsing Meetup event: {e}")
+                continue
+                
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 18: Eventbrite Scraper
+
+Create scrapers/eventbrite.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_eventbrite():
+    """Scrape tech events from Eventbrite"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://www.eventbrite.com/d/ca--san-francisco/tech/"
+    
+    try:
+        driver.get(url)
+        time.sleep(4)
+        
+        event_cards = driver.find_elements(By.CSS_SELECTOR, '.search-event-card')  # Adjust
+        
+        for card in event_cards[:15]:  # Limit
+            try:
+                title = card.find_element(By.CSS_SELECTOR, '.event-card__title').text  # Adjust
+                event_url = card.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+                date_text = card.find_element(By.CSS_SELECTOR, '.event-card__date').text  # Adjust
+                location = card.find_element(By.CSS_SELECTOR, '.event-card__location').text  # Adjust
+                
+                event_date = None
+                event_time = None
+                try:
+                    dt = parser.parse(date_text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+                
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': event_url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Eventbrite',
+                    'price': 'Varies'
+                })
+            except Exception as e:
+                print(f"Error parsing Eventbrite event: {e}")
+                continue
+                
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 19: Update Main Scraper for Phase 2
+
+Update scrapers/scraper.py:
+python
+
+from scrapers.garys_guide import scrape_garys_guide
+from scrapers.agenda_hero import scrape_agenda_hero
+# Phase 2 imports
+from scrapers.luma import scrape_luma_genai_sf, scrape_luma_ai_events
+from scrapers.cerebral_valley import scrape_cerebral_valley
+from scrapers.meetup import scrape_meetup
+from scrapers.eventbrite import scrape_eventbrite
+from database.db_helper import insert_event, clear_old_events
+
+def run_all_scrapers(phase=2):
+    """Run all scrapers and store results
+    
+    Args:
+        phase: 1 for Phase 1 only, 2 for all scrapers
+    """
+    print("Starting scraper run...")
+    clear_old_events()
+    all_events = []
+    
+    # Phase 1 scrapers
+    scrapers_phase1 = [
+        ('Gary\'s Guide', scrape_garys_guide),
+        ('Agenda Hero', scrape_agenda_hero),
+    ]
+    
+    # Phase 2 scrapers
+    scrapers_phase2 = [
+        ('Luma - GenAI SF', scrape_luma_genai_sf),
+        ('Luma - AI Events', scrape_luma_ai_events),
+        ('Cerebral Valley', scrape_cerebral_valley),
+        ('Meetup', scrape_meetup),
+        ('Eventbrite', scrape_eventbrite),
+    ]
+    
+    # Run Phase 1
+    for name, scraper_func in scrapers_phase1:
+        try:
+            print(f"Scraping {name}...")
+            events = scraper_func()
+            all_events.extend(events)
+            print(f"Found {len(events)} events from {name}")
+        except Exception as e:
+            print(f"Error scraping {name}: {e}")
+    
+    # Run Phase 2 if requested
+    if phase >= 2:
+        for name, scraper_func in scrapers_phase2:
+            try:
+                print(f"Scraping {name}...")
+                events = scraper_func()
+                all_events.extend(events)
+                print(f"Found {len(events)} events from {name}")
+            except Exception as e:
+                print(f"Error scraping {name}: {e}")
+    
+    # Insert into database
+    inserted = 0
+    for event in all_events:
+        if event['event_date']:
+            if insert_event(event):
+                inserted += 1
+    
+    print(f"Inserted/updated {inserted} events")
+    return inserted
+
+Step 20: Add Scheduler (Optional)
+
+Create scheduler.py:
+python
+
+import schedule
+import time
+from scrapers.scraper import run_all_scrapers
+
+def job():
+    """Run scraper job"""
+    print("Running scheduled scrape...")
+    run_all_scrapers(phase=2)
+
+# Run daily at 6 AM
+schedule.every().day.at("06:00").do(job)
+
+# Run weekly on Mondays at 8 AM
+schedule.every().monday.at("08:00").do(job)
+
+if __name__ == '__main__':
+    print("Scheduler started...")
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+Usage Instructions
+Initial Setup:
+
+    Create project directory and install Phase 1 dependencies
+    Set up PostgreSQL database
+    Run Phase 1 scrapers to test
+    Start Flask app and verify display
+
+Add Phase 2:
+
+    Install Selenium dependencies
+    Add Phase 2 scrapers one by one
+    Test each scraper individually
+    Update main scraper to include Phase 2
+
+Running:
+bash
+
+# Manual scrape
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers()"
+
+# Start Flask
+python app.py
+
+# Start scheduler (optional)
+python scheduler.py
+
+Customization:
+
+    Adjust CSS selectors in each scraper based on actual HTML
+    Modify category keywords in config.py
+    Add more event sources by creating new scraper files
+    Customize colors and styling in templates/index.html
+
+Notes:
+
+    IMPORTANT: You'll need to inspect the actual HTML of each website and adjust the CSS selectors in each scraper
+    Selenium scrapers are slower but handle JavaScript-rendered content
+    The duplicate detection uses (title, event_date) as unique constraint
+    JSON export happens automatically in background when viewing the page
+    PostgreSQL stores data for future analysis
+
+Let me know when you're ready to implement and I can help debug specific scrapers!
+
+createdb : The term 'createdb' is not recognized as the name of a cmdlet...
+
+You're on Windows! Let me fix the PostgreSQL setup commands for you:
+Windows PostgreSQL Setup
+Option 1: Using psql directly (Recommended)
+bash
+
+# Open Command Prompt or PowerShell and run:
+psql -U postgres
+
+# Then inside psql, run:
+CREATE DATABASE tech_events;
+\q
+
+# Now run the schema:
+psql -U postgres -d tech_events -f database/schema.sql
+
+Option 2: Using pgAdmin (GUI)
+
+    Open pgAdmin (should be installed with PostgreSQL)
+    Right-click on "Databases" → "Create" → "Database"
+    Name it tech_events
+    Click "Save"
+    Right-click on tech_events → "Query Tool"
+    Open database/schema.sql and execute it
+
+Option 3: Python script to create database
+
+Create setup_db.py:
+python
+
+import psycopg2
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+# Connect to PostgreSQL server (not to a specific database)
+conn = psycopg2.connect(
+    host='localhost',
+    user='postgres',
+    password='YOUR_PASSWORD_HERE',  # Change this!
+    port='5432'
+)
+conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
+# Create database
+cur = conn.cursor()
+try:
+    cur.execute('CREATE DATABASE tech_events')
+    print("Database created successfully!")
+except psycopg2.errors.DuplicateDatabase:
+    print("Database already exists")
+cur.close()
+conn.close()
+
+# Now connect to the new database and create tables
+conn = psycopg2.connect(
+    host='localhost',
+    database='tech_events',
+    user='postgres',
+    password='YOUR_PASSWORD_HERE',  # Change this!
+    port='5432'
+)
+
+cur = conn.cursor()
+
+# Read and execute schema
+with open('database/schema.sql', 'r') as f:
+    schema = f.read()
+    cur.execute(schema)
+    conn.commit()
+    print("Tables created successfully!")
+
+cur.close()
+conn.close()
+
+Then run:
+bash
+
+python setup_db.py
+
+Option 4: One-liner using psql
+bash
+
+# In PowerShell or CMD:
+psql -U postgres -c "CREATE DATABASE tech_events;"
+psql -U postgres -d tech_events -f database/schema.sql
+
+Update config.py for Windows
+
+You'll also need to update your PostgreSQL password in config.py:
+python
+
+class Config:
+    # PostgreSQL connection
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
+    DB_NAME = os.getenv('DB_NAME', 'tech_events')
+    DB_USER = os.getenv('DB_USER', 'postgres')
+    DB_PASSWORD = os.getenv('DB_PASSWORD', 'your_postgres_password')  # ADD YOUR PASSWORD
+    DB_PORT = os.getenv('DB_PORT', '5432')
+    # ... rest of config
+
+Troubleshooting
+
+If psql is not found:
+
+    Find your PostgreSQL installation (usually C:\Program Files\PostgreSQL\16\bin\)
+    Add it to your PATH, or use the full path:
+
+bash
+
+"C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres
+
+Which option should you use?
+
+    If you're comfortable with command line: Option 1 or 4
+    If you prefer GUI: Option 2 (pgAdmin)
+    If you want it automated: Option 3 (Python script)
+
+Let me know which approach you'd like to use!
+
+Is there a method for storing the data that is simpler to set up that I'm missing?
+
+Yes! Great point. For a project like this, SQLite is much simpler and requires zero setup. Let me give you the updated instructions:
+Simplified Version Using SQLite
+Updated Step 2: SQLite Database Setup
+
+Create database/schema.sql:
+sql
+
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(500) NOT NULL,
+    event_date DATE NOT NULL,
+    event_time TIME,
+    location VARCHAR(500),
+    url VARCHAR(1000) UNIQUE,
+    description TEXT,
+    category VARCHAR(50),
+    source VARCHAR(100),
+    price VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(title, event_date)
+);
+
+CREATE INDEX IF NOT EXISTS idx_event_date ON events(event_date);
+CREATE INDEX IF NOT EXISTS idx_category ON events(category);
+CREATE INDEX IF NOT EXISTS idx_source ON events(source);
+
+Updated Step 1: Dependencies
+bash
+
+# SQLite is built into Python, so just remove psycopg2-binary:
+uv pip install flask beautifulsoup4 requests python-dateutil
+
+Updated Step 4: Database Helper
+
+Replace database/db_helper.py with:
+python
+
+import sqlite3
+from contextlib import contextmanager
+from datetime import datetime, timedelta
+
+DB_PATH = 'events.db'
+
+def init_db():
+    """Initialize database with schema"""
+    with sqlite3.connect(DB_PATH) as conn:
+        with open('database/schema.sql', 'r') as f:
+            conn.executescript(f.read())
+
+@contextmanager
+def get_db_connection():
+    """Context manager for database connections"""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row  # Return rows as dictionaries
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def insert_event(event_data):
+    """Insert event into database, ignore duplicates"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        try:
+            cur.execute("""
+                INSERT INTO events (title, event_date, event_time, location, url, 
+                                  description, category, source, price)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(title, event_date) DO UPDATE 
+                SET updated_at = CURRENT_TIMESTAMP
+            """, (
+                event_data['title'],
+                event_data['event_date'],
+                event_data['event_time'],
+                event_data['location'],
+                event_data['url'],
+                event_data['description'],
+                event_data['category'],
+                event_data['source'],
+                event_data['price']
+            ))
+            conn.commit()
+            return cur.lastrowid
+        except Exception as e:
+            conn.rollback()
+            print(f"Error inserting event: {e}")
+            return None
+
+def get_all_events():
+    """Retrieve all events ordered by date and category"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT * FROM events 
+            WHERE event_date >= date('now')
+            ORDER BY category, event_date, event_time
+        """)
+        return [dict(row) for row in cur.fetchall()]
+
+def clear_old_events():
+    """Remove events older than 30 days"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("""
+            DELETE FROM events 
+            WHERE event_date < date('now', '-30 days')
+        """)
+        conn.commit()
+
+Updated config.py
+
+Remove all PostgreSQL config:
+python
+
+import os
+
+class Config:
+    # Scraping settings
+    REQUEST_TIMEOUT = 10
+    USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    
+    # Category keywords
+    CATEGORY_KEYWORDS = {
+        'hackathon': ['hackathon', 'hack night', 'hacknight', 'buildathon'],
+        'coding_hangout': ['meetup', 'coworking', 'coffee', 'networking', 'hangout', 'social'],
+        'marketing': ['marketing', 'growth', 'seo', 'content', 'branding'],
+        'demo': ['demo day', 'demo', 'pitch day', 'showcase', 'product launch'],
+        'vc_pitch': ['vc', 'venture capital', 'founder', 'investors', 'pitch', 'funding']
+    }
+    
+    # SF location keywords
+    SF_LOCATIONS = ['san francisco', 'sf', 'soma', 'mission', 'hayes valley', 
+                    'financial district', 'fidi', 'tenderloin', 'nob hill']
+
+Updated app.py
+
+Add initialization at the top:
+python
+
+from flask import Flask, render_template, jsonify
+from database.db_helper import get_all_events, init_db
+from scrapers.scraper import run_all_scrapers
+from scrapers.categorizer import is_sf_location
+import json
+from datetime import datetime
+from threading import Thread
+
+# Initialize database on first run
+init_db()
+
+app = Flask(__name__)
+
+# ... rest of app.py stays the same
+
+New Setup Steps
+bash
+
+# 1. Create project
+mkdir tech-events-scraper
+cd tech-events-scraper
+
+# 2. Create virtual environment
+uv venv
+.venv\Scripts\activate  # Windows
+
+# 3. Install dependencies (no PostgreSQL!)
+uv pip install flask beautifulsoup4 requests python-dateutil
+
+# 4. Create directories
+mkdir templates static database scrapers
+type nul > scrapers\__init__.py
+type nul > database\__init__.py
+
+# 5. Create all the files (schema.sql, db_helper.py, etc.)
+
+# 6. Run the app - database will be created automatically!
+python app.py
+
+Benefits of SQLite:
+
+✅ Zero setup - No installation, no server, no passwords
+✅ Single file - events.db contains everything
+✅ Built into Python - No extra dependencies
+✅ Perfect for local development - Easy to backup (just copy the file)
+✅ Easy to inspect - Use DB Browser for SQLite or VS Code extensions
+Trade-offs:
+
+⚠️ SQLite is single-user (fine for this use case)
+⚠️ For production with multiple concurrent users, PostgreSQL is better
+⚠️ For your local scraper that runs periodically, SQLite is perfect!
+
+Would you like to proceed with SQLite instead? It's much simpler and totally appropriate for this project!
+
+yes modify with SQLite instead
+
+Perfect! Here's the complete SQLite version of the instructions:
+Claude Code Instructions for Tech Events Scraper (SQLite Version)
+Project Overview
+
+Build a Flask web scraper that collects tech events from multiple websites, categorizes them, detects duplicates, and displays them in an interactive web interface with color-coded categories and locations.
+PHASE 1: Core System with HTML Scraping
+Step 1: Project Setup
+bash
+
+# Create project directory
+mkdir tech-events-scraper
+cd tech-events-scraper
+
+# Initialize Python virtual environment with uv
+uv venv
+.venv\Scripts\activate  # Windows
+
+# Install Phase 1 dependencies
+uv pip install flask beautifulsoup4 requests python-dateutil
+
+Step 2: SQLite Database Schema
+
+Create database/schema.sql:
+sql
+
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(500) NOT NULL,
+    event_date DATE NOT NULL,
+    event_time TIME,
+    location VARCHAR(500),
+    url VARCHAR(1000) UNIQUE,
+    description TEXT,
+    category VARCHAR(50),
+    source VARCHAR(100),
+    price VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(title, event_date)
+);
+
+CREATE INDEX IF NOT EXISTS idx_event_date ON events(event_date);
+CREATE INDEX IF NOT EXISTS idx_category ON events(category);
+CREATE INDEX IF NOT EXISTS idx_source ON events(source);
+
+Step 3: Configuration File
+
+Create config.py:
+python
+
+import os
+
+class Config:
+    # Scraping settings
+    REQUEST_TIMEOUT = 10
+    USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    
+    # Category keywords
+    CATEGORY_KEYWORDS = {
+        'hackathon': ['hackathon', 'hack night', 'hacknight', 'buildathon'],
+        'coding_hangout': ['meetup', 'coworking', 'coffee', 'networking', 'hangout', 'social'],
+        'marketing': ['marketing', 'growth', 'seo', 'content', 'branding'],
+        'demo': ['demo day', 'demo', 'pitch day', 'showcase', 'product launch'],
+        'vc_pitch': ['vc', 'venture capital', 'founder', 'investors', 'pitch', 'funding']
+    }
+    
+    # SF location keywords
+    SF_LOCATIONS = ['san francisco', 'sf', 'soma', 'mission', 'hayes valley', 
+                    'financial district', 'fidi', 'tenderloin', 'nob hill',
+                    'castro', 'marina', 'pac heights', 'russian hill']
+
+Step 4: Database Helper
+
+Create database/db_helper.py:
+python
+
+import sqlite3
+from contextlib import contextmanager
+from datetime import datetime, timedelta
+
+DB_PATH = 'events.db'
+
+def init_db():
+    """Initialize database with schema"""
+    with sqlite3.connect(DB_PATH) as conn:
+        with open('database/schema.sql', 'r') as f:
+            conn.executescript(f.read())
+    print("Database initialized successfully!")
+
+@contextmanager
+def get_db_connection():
+    """Context manager for database connections"""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row  # Return rows as dictionaries
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def insert_event(event_data):
+    """Insert event into database, ignore duplicates"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        try:
+            cur.execute("""
+                INSERT INTO events (title, event_date, event_time, location, url, 
+                                  description, category, source, price)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(title, event_date) DO UPDATE 
+                SET updated_at = CURRENT_TIMESTAMP
+            """, (
+                event_data['title'],
+                event_data['event_date'],
+                event_data['event_time'],
+                event_data['location'],
+                event_data['url'],
+                event_data['description'],
+                event_data['category'],
+                event_data['source'],
+                event_data['price']
+            ))
+            conn.commit()
+            return cur.lastrowid
+        except Exception as e:
+            conn.rollback()
+            print(f"Error inserting event: {e}")
+            return None
+
+def get_all_events():
+    """Retrieve all events ordered by date and category"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT * FROM events 
+            WHERE event_date >= date('now')
+            ORDER BY category, event_date, event_time
+        """)
+        return [dict(row) for row in cur.fetchall()]
+
+def clear_old_events():
+    """Remove events older than 30 days"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("""
+            DELETE FROM events 
+            WHERE event_date < date('now', '-30 days')
+        """)
+        deleted = cur.rowcount
+        conn.commit()
+        print(f"Deleted {deleted} old events")
+
+Step 5: Categorization Logic
+
+Create scrapers/categorizer.py:
+python
+
+from config import Config
+
+def categorize_event(title, description=''):
+    """Categorize event based on keywords in title and description"""
+    text = f"{title} {description}".lower()
+    
+    # Count keyword matches for each category
+    scores = {}
+    for category, keywords in Config.CATEGORY_KEYWORDS.items():
+        scores[category] = sum(1 for keyword in keywords if keyword in text)
+    
+    # Special case: VC/Pitch needs multiple founder/VC mentions
+    if 'vc_pitch' in scores:
+        founder_vc_count = text.count('founder') + text.count('vc') + text.count('venture')
+        if founder_vc_count < 2:
+            scores['vc_pitch'] = 0
+    
+    # Return category with highest score, or 'other'
+    if max(scores.values()) > 0:
+        return max(scores, key=scores.get)
+    return 'other'
+
+def is_sf_location(location):
+    """Check if location is in San Francisco"""
+    if not location:
+        return False
+    location_lower = location.lower()
+    return any(sf_keyword in location_lower for sf_keyword in Config.SF_LOCATIONS)
+
+Step 6: Gary's Guide Scraper
+
+Create scrapers/garys_guide.py:
+python
+
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser
+from config import Config
+from scrapers.categorizer import categorize_event
+
+def scrape_garys_guide():
+    """Scrape events from Gary's Guide"""
+    url = "https://www.garysguide.com/events?region=sf"
+    
+    headers = {'User-Agent': Config.USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=Config.REQUEST_TIMEOUT)
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.content, 'html.parser')
+    events = []
+    
+    # Gary's Guide uses table rows for events
+    # The structure has event info in table cells
+    event_rows = soup.find_all('tr')
+    
+    for row in event_rows:
+        try:
+            # Find the event link
+            link = row.find('a', href=lambda x: x and '/events/' in x)
+            if not link:
+                continue
+                
+            title = link.get_text(strip=True)
+            event_url = 'https://www.garysguide.com' + link.get('href', '')
+            
+            # Get all text from the row to extract info
+            row_text = row.get_text(separator='|', strip=True)
+            
+            # Try to find date/time info
+            cells = row.find_all('td')
+            event_date = None
+            event_time = None
+            location = ''
+            price = 'Free'
+            
+            # First cell usually has date/time
+            if cells:
+                date_cell = cells[0].get_text(strip=True)
+                try:
+                    dt = parser.parse(date_cell, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+            
+            # Look for location in row text
+            if len(cells) > 2:
+                location_text = cells[2].get_text(strip=True)
+                if location_text and not location_text.startswith('$'):
+                    location = location_text
+            
+            # Look for price
+            if '$' in row_text:
+                price_parts = [p for p in row_text.split('|') if '$' in p]
+                if price_parts:
+                    price = price_parts[0].strip()
+            
+            # Categorize
+            category = categorize_event(title)
+            
+            if event_date:  # Only add if we have a date
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': event_url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Gary\'s Guide',
+                    'price': price
+                })
+            
+        except Exception as e:
+            print(f"Error parsing Gary's Guide event: {e}")
+            continue
+    
+    return events
+
+Step 7: Agenda Hero Scraper
+
+Create scrapers/agenda_hero.py:
+python
+
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser
+from config import Config
+from scrapers.categorizer import categorize_event
+
+def scrape_agenda_hero():
+    """Scrape events from Agenda Hero SF/Bay Area AI Events"""
+    url = "https://agendahero.com/schedule/sf-and-bay-area-ai-events-0f8899a0-3dbc-4d6a-ad05-58225b751316?view=month"
+    
+    headers = {'User-Agent': Config.USER_AGENT}
+    response = requests.get(url, headers=headers, timeout=Config.REQUEST_TIMEOUT)
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.content, 'html.parser')
+    events = []
+    
+    # Agenda Hero likely uses div-based layout
+    # Look for event containers (adjust selector based on actual HTML)
+    event_divs = soup.find_all('div', class_=lambda x: x and ('event' in x.lower() if x else False))
+    
+    # Also try finding all links that might be events
+    all_links = soup.find_all('a', href=True)
+    
+    for link in all_links:
+        try:
+            # Skip navigation links
+            href = link.get('href', '')
+            if not href or href.startswith('#') or 'schedule' in href:
+                continue
+            
+            title = link.get_text(strip=True)
+            if not title or len(title) < 5:  # Skip short/empty titles
+                continue
+            
+            event_url = href if href.startswith('http') else 'https://agendahero.com' + href
+            
+            # Try to find parent container for more info
+            parent = link.find_parent(['div', 'li', 'article'])
+            
+            event_date = None
+            event_time = None
+            location = ''
+            
+            if parent:
+                parent_text = parent.get_text(separator=' ', strip=True)
+                
+                # Try to extract date/time from parent text
+                try:
+                    dt = parser.parse(parent_text, fuzzy=True)
+                    event_date = dt.date()
+                    event_time = dt.time()
+                except:
+                    pass
+                
+                # Look for location indicators
+                if 'SF' in parent_text or 'San Francisco' in parent_text:
+                    location = 'San Francisco, CA'
+            
+            category = categorize_event(title)
+            
+            # Only add events with dates
+            if event_date:
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': event_url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Agenda Hero',
+                    'price': 'Free'
+                })
+            
+        except Exception as e:
+            print(f"Error parsing Agenda Hero event: {e}")
+            continue
+    
+    # Remove duplicates based on title
+    seen_titles = set()
+    unique_events = []
+    for event in events:
+        if event['title'] not in seen_titles:
+            seen_titles.add(event['title'])
+            unique_events.append(event)
+    
+    return unique_events
+
+Step 8: Main Scraper Orchestrator
+
+Create scrapers/scraper.py:
+python
+
+from scrapers.garys_guide import scrape_garys_guide
+from scrapers.agenda_hero import scrape_agenda_hero
+from database.db_helper import insert_event, clear_old_events
+
+def run_all_scrapers(phase=1):
+    """Run all scrapers and store results
+    
+    Args:
+        phase: 1 for Phase 1 only, 2 for all scrapers
+    """
+    print("Starting scraper run...")
+    
+    # Clear old events first
+    clear_old_events()
+    
+    all_events = []
+    
+    # Phase 1 scrapers
+    try:
+        print("Scraping Gary's Guide...")
+        events = scrape_garys_guide()
+        all_events.extend(events)
+        print(f"Found {len(events)} events from Gary's Guide")
+    except Exception as e:
+        print(f"Error scraping Gary's Guide: {e}")
+    
+    try:
+        print("Scraping Agenda Hero...")
+        events = scrape_agenda_hero()
+        all_events.extend(events)
+        print(f"Found {len(events)} events from Agenda Hero")
+    except Exception as e:
+        print(f"Error scraping Agenda Hero: {e}")
+    
+    # Insert into database
+    inserted = 0
+    for event in all_events:
+        if event['event_date']:  # Only insert if we have a valid date
+            if insert_event(event):
+                inserted += 1
+    
+    print(f"Inserted/updated {inserted} events")
+    return inserted
+
+Step 9: Flask Application
+
+Create app.py:
+python
+
+from flask import Flask, render_template, jsonify
+from database.db_helper import get_all_events, init_db
+from scrapers.scraper import run_all_scrapers
+from scrapers.categorizer import is_sf_location
+import json
+from datetime import datetime
+from threading import Thread
+import os
+
+# Initialize database on first run
+if not os.path.exists('events.db'):
+    init_db()
+
+app = Flask(__name__)
+
+# Category colors
+CATEGORY_COLORS = {
+    'hackathon': '#FF6B6B',      # Red
+    'coding_hangout': '#4ECDC4', # Teal
+    'marketing': '#FFE66D',      # Yellow
+    'demo': '#95E1D3',           # Mint
+    'vc_pitch': '#C7CEEA',       # Purple
+    'other': '#CCCCCC'           # Gray
+}
+
+def export_to_json(events):
+    """Export events to JSON file"""
+    # Ensure static directory exists
+    os.makedirs('static', exist_ok=True)
+    
+    events_list = []
+    for event in events:
+        event_dict = dict(event)
+        # Convert date/time to strings
+        if event_dict.get('event_date'):
+            event_dict['event_date'] = str(event_dict['event_date'])
+        if event_dict.get('event_time'):
+            event_dict['event_time'] = str(event_dict['event_time'])
+        if event_dict.get('created_at'):
+            event_dict['created_at'] = str(event_dict['created_at'])
+        if event_dict.get('updated_at'):
+            event_dict['updated_at'] = str(event_dict['updated_at'])
+        events_list.append(event_dict)
+    
+    with open('static/events_export.json', 'w') as f:
+        json.dump(events_list, f, indent=2)
+
+@app.route('/')
+def index():
+    """Main page displaying events"""
+    events = get_all_events()
+    
+    # Add color and SF indicator to each event
+    for event in events:
+        event['color'] = CATEGORY_COLORS.get(event['category'], '#CCCCCC')
+        event['is_sf'] = is_sf_location(event.get('location', ''))
+        
+        # Parse date/time for display
+        if isinstance(event.get('event_date'), str):
+            try:
+                event['event_date'] = datetime.fromisoformat(event['event_date']).date()
+            except:
+                pass
+        
+        if isinstance(event.get('event_time'), str):
+            try:
+                event['event_time'] = datetime.fromisoformat(event['event_time']).time()
+            except:
+                pass
+    
+    # Group by category
+    events_by_category = {}
+    for event in events:
+        category = event['category']
+        if category not in events_by_category:
+            events_by_category[category] = []
+        events_by_category[category].append(event)
+    
+    # Export to JSON in background
+    Thread(target=export_to_json, args=(events,)).start()
+    
+    return render_template('index.html', 
+                         events_by_category=events_by_category,
+                         category_colors=CATEGORY_COLORS)
+
+@app.route('/refresh')
+def refresh():
+    """Trigger scraper refresh"""
+    def scrape_async():
+        run_all_scrapers()
+    
+    Thread(target=scrape_async).start()
+    return jsonify({'status': 'Scraping started'})
+
+@app.route('/api/events')
+def api_events():
+    """API endpoint to get all events"""
+    events = get_all_events()
+    # Convert to JSON-serializable format
+    events_list = []
+    for event in events:
+        event_dict = dict(event)
+        if event_dict.get('event_date'):
+            event_dict['event_date'] = str(event_dict['event_date'])
+        if event_dict.get('event_time'):
+            event_dict['event_time'] = str(event_dict['event_time'])
+        events_list.append(event_dict)
+    return jsonify(events_list)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
+
+Step 10: HTML Template
+
+Create templates/index.html:
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Events Scraper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        button, .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        button:hover, .button:hover {
+            background: #0056b3;
+        }
+        
+        .category-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .category-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .category-title {
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .event-count {
+            color: #999;
+            margin-left: auto;
+        }
+        
+        .event-card {
+            border-left: 4px solid;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fafafa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .event-card:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+        
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+        }
+        
+        .event-title a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .event-title a:hover {
+            color: #007bff;
+        }
+        
+        .sf-badge {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+            flex-wrap: wrap;
+        }
+        
+        .event-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .event-details.show {
+            display: block;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Tech Events Scraper</h1>
+            <p class="subtitle">Upcoming tech events in the SF Bay Area</p>
+            
+            <div class="legend">
+                {% for category, color in category_colors.items() %}
+                <div class="legend-item">
+                    <div class="legend-color" style="background: {{ color }}"></div>
+                    <span>{{ category.replace('_', ' ').title() }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="controls">
+                <button onclick="refreshEvents()">🔄 Refresh Events</button>
+                <a href="/static/events_export.json" download class="button">
+                    📥 Download JSON
+                </a>
+            </div>
+        </header>
+        
+        {% for category, events in events_by_category.items() %}
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-indicator" style="background: {{ category_colors[category] }}"></div>
+                <h2 class="category-title">{{ category.replace('_', ' ') }}</h2>
+                <span class="event-count">({{ events|length }} events)</span>
+            </div>
+            
+            {% for event in events %}
+            <div class="event-card" style="border-left-color: {{ event.color }}" onclick="toggleDetails(this)">
+                <div class="event-header">
+                    <div class="event-title">
+                        <a href="{{ event.url }}" target="_blank" onclick="event.stopPropagation()">
+                            {{ event.title }}
+                        </a>
+                        {% if event.is_sf %}
+                        <span class="sf-badge">SF</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="event-meta">
+                    <div class="meta-item">
+                        📅 {{ event.event_date.strftime('%b %d, %Y') if event.event_date else 'TBD' }}
+                    </div>
+                    {% if event.event_time %}
+                    <div class="meta-item">
+                        🕐 {{ event.event_time.strftime('%I:%M %p') }}
+                    </div>
+                    {% endif %}
+                    <div class="meta-item">
+                        🏢 {{ event.source }}
+                    </div>
+                    {% if event.price %}
+                    <div class="meta-item">
+                        💵 {{ event.price }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="event-details">
+                    {% if event.location %}
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+                    {% endif %}
+                    {% if event.description %}
+                    <p><strong>Description:</strong> {{ event.description }}</p>
+                    {% endif %}
+                    <p><strong>Link:</strong> <a href="{{ event.url }}" target="_blank">{{ event.url }}</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        {% if not events_by_category %}
+        <div class="loading">
+            <h2>No events found</h2>
+            <p>Click "Refresh Events" to start scraping.</p>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function toggleDetails(card) {
+            const details = card.querySelector('.event-details');
+            details.classList.toggle('show');
+        }
+        
+        function refreshEvents() {
+            if (confirm('This will scrape all websites and may take a minute. Continue?')) {
+                const button = event.target;
+                button.disabled = true;
+                button.textContent = '⏳ Scraping...';
+                
+                fetch('/refresh')
+                    .then(r => r.json())
+                    .then(data => {
+                        alert('Scraping started! Page will reload in 15 seconds.');
+                        setTimeout(() => location.reload(), 15000);
+                    })
+                    .catch(err => {
+                        alert('Error: ' + err);
+                        button.disabled = false;
+                        button.textContent = '🔄 Refresh Events';
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
+
+Step 11: Create Directory Structure
+bash
+
+# Create directories
+mkdir templates
+mkdir static
+mkdir database
+mkdir scrapers
+
+# Create __init__.py files
+type nul > scrapers\__init__.py
+type nul > database\__init__.py
+
+Step 12: Test & Run Phase 1
+bash
+
+# Run the scraper manually first
+python -c "from database.db_helper import init_db; init_db()"
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers()"
+
+# Start Flask app
+python app.py
+
+Open browser to http://localhost:5000
+PHASE 2: Add Selenium for JavaScript-Heavy Sites
+Step 13: Install Selenium Dependencies
+bash
+
+uv pip install selenium webdriver-manager
+
+Step 14: Selenium Base Scraper
+
+Create scrapers/selenium_base.py:
+python
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+from config import Config
+
+def get_selenium_driver():
+    """Initialize Selenium WebDriver with headless Chrome"""
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument(f'user-agent={Config.USER_AGENT}')
+    
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    return driver
+
+def wait_for_element(driver, selector, by=By.CSS_SELECTOR, timeout=10):
+    """Wait for element to be present"""
+    return WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((by, selector))
+    )
+
+Step 15: Luma Scraper
+
+Create scrapers/luma.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_luma_calendar(calendar_url, source_name):
+    """Scrape events from a Luma calendar"""
+    driver = get_selenium_driver()
+    events = []
+    
+    try:
+        driver.get(calendar_url)
+        time.sleep(5)  # Wait for JS to load
+        
+        # Scroll to load more events
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        
+        # Find event elements (you'll need to inspect Luma's actual HTML)
+        # These selectors are placeholders - adjust based on real HTML
+        event_elements = driver.find_elements(By.CSS_SELECTOR, 'a[href*="/lu/"]')
+        
+        for elem in event_elements[:30]:  # Limit to 30 events
+            try:
+                # Get event URL
+                url = elem.get_attribute('href')
+                if not url or '/lu/' not in url:
+                    continue
+                
+                # Get text content
+                text = elem.text
+                if not text or len(text) < 5:
+                    continue
+                
+                # Try to extract title (usually first line)
+                lines = text.split('\n')
+                title = lines[0] if lines else text
+                
+                # Try to parse date from text
+                event_date = None
+                event_time = None
+                location = 'SF Bay Area'
+                
+                for line in lines:
+                    try:
+                        dt = parser.parse(line, fuzzy=True)
+                        event_date = dt.date()
+                        event_time = dt.time()
+                        break
+                    except:
+                        if 'SF' in line or 'San Francisco' in line:
+                            location = line
+                        continue
+                
+                if not event_date:
+                    continue
+                
+                category = categorize_event(title, text)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': url,
+                    'description': '',
+                    'category': category,
+                    'source': source_name,
+                    'price': 'Free'
+                })
+            except Exception as e:
+                print(f"Error parsing Luma event: {e}")
+                continue
+                
+    except Exception as e:
+        print(f"Error loading Luma calendar: {e}")
+    finally:
+        driver.quit()
+    
+    return events
+
+def scrape_luma_genai_sf():
+    """Scrape Luma GenAI SF calendar"""
+    return scrape_luma_calendar('https://lu.ma/genai-sf', 'Luma - GenAI SF')
+
+def scrape_luma_ai_events():
+    """Scrape Luma AI Events calendar"""
+    return scrape_luma_calendar('https://lu.ma/ai-events', 'Luma - AI Events')
+
+Step 16: Cerebral Valley Scraper
+
+Create scrapers/cerebral_valley.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_cerebral_valley():
+    """Scrape events from Cerebral Valley"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://cerebralvalley.ai/events"
+    
+    try:
+        driver.get(url)
+        time.sleep(4)
+        
+        # Scroll to load events
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        
+        # Find event links (adjust selector based on actual HTML)
+        event_links = driver.find_elements(By.CSS_SELECTOR, 'a')
+        
+        for link in event_links:
+            try:
+                href = link.get_attribute('href')
+                text = link.text
+                
+                # Filter for actual event links
+                if not text or len(text) < 10:
+                    continue
+                if not href or 'event' not in href.lower():
+                    continue
+                
+                lines = text.split('\n')
+                title = lines[0]
+                
+                event_date = None
+                event_time = None
+                location = ''
+                
+                # Parse date from text
+                for line in lines:
+                    try:
+                        dt = parser.parse(line, fuzzy=True)
+                        event_date = dt.date()
+                        event_time = dt.time()
+                        break
+                    except:
+                        if any(kw in line.lower() for kw in ['sf', 'san francisco', 'bay area']):
+                            location = line
+                
+                if not event_date:
+                    continue
+                
+                category = categorize_event(title, text)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': href,
+                    'description': '',
+                    'category': category,
+                    'source': 'Cerebral Valley',
+                    'price': 'Free'
+                })
+            except Exception as e:
+                continue
+                
+    except Exception as e:
+        print(f"Error scraping Cerebral Valley: {e}")
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 17: Meetup Scraper
+
+Create scrapers/meetup.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_meetup():
+    """Scrape tech events from Meetup"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://www.meetup.com/find/?keywords=tech+&location=us--ca--San+Francisco&source=EVENTS"
+    
+    try:
+        driver.get(url)
+        time.sleep(5)
+        
+        # Scroll to load more
+        for _ in range(2):
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(2)
+        
+        # Find event cards
+        event_cards = driver.find_elements(By.CSS_SELECTOR, 'div[id*="event"]')
+        
+        for card in event_cards[:20]:
+            try:
+                # Find link
+                link = card.find_element(By.CSS_SELECTOR, 'a')
+                url = link.get_attribute('href')
+                text = card.text
+                
+                if not text:
+                    continue
+                
+                lines = text.split('\n')
+                title = lines[0]
+                
+                event_date = None
+                event_time = None
+                location = ''
+                
+                for line in lines:
+                    try:
+                        dt = parser.parse(line, fuzzy=True)
+                        event_date = dt.date()
+                        event_time = dt.time()
+                    except:
+                        if any(kw in line.lower() for kw in ['sf', 'san francisco']):
+                            location = line
+                
+                if not event_date:
+                    continue
+                
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': location,
+                    'url': url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Meetup',
+                    'price': 'Free'
+                })
+            except:
+                continue
+                
+    except Exception as e:
+        print(f"Error scraping Meetup: {e}")
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 18: Eventbrite Scraper
+
+Create scrapers/eventbrite.py:
+python
+
+from selenium.webdriver.common.by import By
+from scrapers.selenium_base import get_selenium_driver
+from scrapers.categorizer import categorize_event
+from dateutil import parser
+import time
+
+def scrape_eventbrite():
+    """Scrape tech events from Eventbrite"""
+    driver = get_selenium_driver()
+    events = []
+    url = "https://www.eventbrite.com/d/ca--san-francisco/tech/"
+    
+    try:
+        driver.get(url)
+        time.sleep(4)
+        
+        # Scroll
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
+        
+        # Find event cards
+        event_cards = driver.find_elements(By.CSS_SELECTOR, 'article, div[class*="event"]')
+        
+        for card in event_cards[:15]:
+            try:
+                link = card.find_element(By.CSS_SELECTOR, 'a')
+                url = link.get_attribute('href')
+                text = card.text
+                
+                if not text or 'event' not in url.lower():
+                    continue
+                
+                lines = text.split('\n')
+                title = lines[0]
+                
+                event_date = None
+                event_time = None
+                
+                for line in lines:
+                    try:
+                        dt = parser.parse(line, fuzzy=True)
+                        event_date = dt.date()
+                        event_time = dt.time()
+                        break
+                    except:
+                        continue
+                
+                if not event_date:
+                    continue
+                
+                category = categorize_event(title)
+                
+                events.append({
+                    'title': title,
+                    'event_date': event_date,
+                    'event_time': event_time,
+                    'location': 'San Francisco, CA',
+                    'url': url,
+                    'description': '',
+                    'category': category,
+                    'source': 'Eventbrite',
+                    'price': 'Varies'
+                })
+            except:
+                continue
+                
+    except Exception as e:
+        print(f"Error scraping Eventbrite: {e}")
+    finally:
+        driver.quit()
+    
+    return events
+
+Step 19: Update Main Scraper for Phase 2
+
+Update scrapers/scraper.py:
+python
+
+from scrapers.garys_guide import scrape_garys_guide
+from scrapers.agenda_hero import scrape_agenda_hero
+# Phase 2 imports
+from scrapers.luma import scrape_luma_genai_sf, scrape_luma_ai_events
+from scrapers.cerebral_valley import scrape_cerebral_valley
+from scrapers.meetup import scrape_meetup
+from scrapers.eventbrite import scrape_eventbrite
+from database.db_helper import insert_event, clear_old_events
+
+def run_all_scrapers(phase=1):
+    """Run all scrapers and store results
+    
+    Args:
+        phase: 1 for Phase 1 only, 2 for all scrapers
+    """
+    print("Starting scraper run...")
+    clear_old_events()
+    all_events = []
+    
+    # Phase 1 scrapers
+    scrapers_phase1 = [
+        ('Gary\'s Guide', scrape_garys_guide),
+        ('Agenda Hero', scrape_agenda_hero),
+    ]
+    
+    # Phase 2 scrapers
+    scrapers_phase2 = [
+        ('Luma - GenAI SF', scrape_luma_genai_sf),
+        ('Luma - AI Events', scrape_luma_ai_events),
+        ('Cerebral Valley', scrape_cerebral_valley),
+        ('Meetup', scrape_meetup),
+        ('Eventbrite', scrape_eventbrite),
+    ]
+    
+    # Run Phase 1
+    for name, scraper_func in scrapers_phase1:
+        try:
+            print(f"Scraping {name}...")
+            events = scraper_func()
+            all_events.extend(events)
+            print(f"Found {len(events)} events from {name}")
+        except Exception as e:
+            print(f"Error scraping {name}: {e}")
+    
+    # Run Phase 2 if requested
+    if phase >= 2:
+        for name, scraper_func in scrapers_phase2:
+            try:
+                print(f"Scraping {name}...")
+                events = scraper_func()
+                all_events.extend(events)
+                print(f"Found {len(events)} events from {name}")
+            except Exception as e:
+                print(f"Error scraping {name}: {e}")
+    
+    # Insert into database
+    inserted = 0
+    for event in all_events:
+        if event['event_date']:
+            if insert_event(event):
+                inserted += 1
+    
+    print(f"Inserted/updated {inserted} events")
+    return inserted
+
+Step 20: Add Scheduler (Optional)
+
+Create scheduler.py:
+python
+
+import schedule
+import time
+from scrapers.scraper import run_all_scrapers
+
+def job():
+    """Run scraper job"""
+    print("Running scheduled scrape...")
+    run_all_scrapers(phase=2)
+
+# Run daily at 6 AM
+schedule.every().day.at("06:00").do(job)
+
+# Run weekly on Mondays at 8 AM
+schedule.every().monday.at("08:00").do(job)
+
+if __name__ == '__main__':
+    print("Scheduler started. Will run daily at 6 AM and weekly on Mondays at 8 AM")
+    print("Press Ctrl+C to stop")
+    
+    # Run once immediately
+    print("Running initial scrape...")
+    job()
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+Usage Instructions
+Initial Setup:
+bash
+
+# 1. Create all the files above
+# 2. Install dependencies
+uv pip install flask beautifulsoup4 requests python-dateutil
+
+# 3. Initialize database
+python -c "from database.db_helper import init_db; init_db()"
+
+# 4. Run Phase 1 scraper
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers(phase=1)"
+
+# 5. Start Flask
+python app.py
+
+Add Phase 2:
+bash
+
+# 1. Install Selenium
+uv pip install selenium webdriver-manager
+
+# 2. Run full scraper
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers(phase=2)"
+
+Running:
+bash
+
+# Manual scrape (Phase 1 only)
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers(phase=1)"
+
+# Manual scrape (All sites)
+python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers(phase=2)"
+
+# Start Flask
+python app.py
+
+# Start scheduler (optional)
+python scheduler.py
+
+Notes:
+
+    SQLite database is stored in events.db in your project root
+    JSON export is saved to static/events_export.json
+    You can view the database using DB Browser for SQLite
+    The duplicate detection uses (title, event_date) as unique constraint
+    Selenium scrapers have placeholder selectors - you'll need to inspect the actual HTML and adjust them
+
+Ready to start implementing!
+
+type : Cannot find path 'C:\Users\jjcho\tech-event-scraper\nul' because it does not exist.  Are all of the instructions for Windows?
+
+No, you're right! That's a Linux/Mac command. Here are the Windows-specific commands:
+Windows Command Fixes
+For Creating Empty Files:
+
+Instead of:
+bash
+
+type nul > scrapers\__init__.py
+type nul > database\__init__.py
+
+Use one of these options:
+
+Option 1: PowerShell (Recommended)
+powershell
+
+New-Item -ItemType File -Path scrapers\__init__.py
+New-Item -ItemType File -Path database\__init__.py
+
+Option 2: Command Prompt
+cmd
+
+echo. > scrapers\__init__.py
+echo. > database\__init__.py
+
+Option 3: Just use your text editor
+
+    Create the files manually in VS Code/Notepad and save them as empty files
+
+Complete Windows Setup Instructions
+
+Here's the full corrected setup for Windows:
+powershell
+
+# 1. Create project directory
+mkdir tech-events-scraper
+cd tech-events-scraper
+
+# 2. Create virtual environment
+uv venv
+.venv\Scripts\activate
+
+# 3. Install dependencies
+uv pip install flask beautifulsoup4 requests python-dateutil
+
+# 4. Create directory structure
+mkdir templates
+mkdir static
+mkdir database
+mkdir scrapers
+
+# 5. Create __init__.py files (PowerShell)
+New-Item -ItemType File -Path scrapers\__init__.py
+New-Item -ItemType File -Path database\__init__.py
+
+# OR if using Command Prompt:
+# cd .
+# echo. > scrapers\__init__.py
+# echo. > database\__init__.py
+
+File Paths in Code
+
+All the Python code I provided should work fine on Windows because Python handles path separators automatically. However, if you see any issues with file paths, note:
+
+    Windows uses backslashes: scrapers\garys_guide.py
+    Python accepts forward slashes too: scrapers/garys_guide.py
+    Both work in Python code
+
+Updated Step 11
+
+Replace the original Step 11 with this:
+Step 11: Create Directory Structure (Windows)
+
+Using PowerShell:
+powershell
+
+# Create directories
+New-Item -ItemType Directory -Path templates -Force
+New-Item -ItemType Directory -Path static -Force
+New-Item -ItemType Directory -Path database -Force
+New-Item -ItemType Directory -Path scrapers -Force
+
+# Create __init__.py files
+New-Item -ItemType File -Path scrapers\__init__.py -Force
+New-Item -ItemType File -Path database\__init__.py -Force
+
+Using Command Prompt:
+cmd
+
+mkdir templates
+mkdir static
+mkdir database
+mkdir scrapers
+
+echo. > scrapers\__init__.py
+echo. > database\__init__.py
+
+Or just create the folders/files manually in Windows Explorer and your text editor!
+Other Windows-Specific Notes
+
+    Virtual Environment Activation:
+        PowerShell: .venv\Scripts\Activate.ps1
+        CMD: .venv\Scripts\activate.bat
+    If PowerShell gives execution policy errors:
+
+powershell
+
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+    All other Python commands work the same:
+
+bash
+
+   python app.py
+   python -c "from database.db_helper import init_db; init_db()"
+
+Would you like me to provide a complete Windows-only setup script that you can just copy and paste?
+
+Scraping Agenda Hero...
+Found 0 events from Agenda Hero
+Error inserting event: Error binding parameter 3: type 'datetime.time' is not supported
+
+The error is happening because SQLite doesn't have a native TIME type. Let me fix this:
+Fix for SQLite Time Handling
+Update database/schema.sql:
+
+Replace the current schema with this:
+sql
+
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(500) NOT NULL,
+    event_date TEXT NOT NULL,  -- Changed from DATE to TEXT
+    event_time TEXT,            -- Changed from TIME to TEXT
+    location VARCHAR(500),
+    url VARCHAR(1000) UNIQUE,
+    description TEXT,
+    category VARCHAR(50),
+    source VARCHAR(100),
+    price VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(title, event_date)
+);
+
+CREATE INDEX IF NOT EXISTS idx_event_date ON events(event_date);
+CREATE INDEX IF NOT EXISTS idx_category ON events(category);
+CREATE INDEX IF NOT EXISTS idx_source ON events(source);
+
+Update database/db_helper.py:
+
+Replace the insert_event function:
+python
+
+def insert_event(event_data):
+    """Insert event into database, ignore duplicates"""
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        try:
+            # Convert date/time objects to strings for SQLite
+            event_date_str = str(event_data['event_date']) if event_data.get('event_date') else None
+            event_time_str = str(event_data['event_time']) if event_data.get('event_time') else None
+            
+            cur.execute("""
+                INSERT INTO events (title, event_date, event_time, location, url, 
+                                  description, category, source, price)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(title, event_date) DO UPDATE 
+                SET updated_at = CURRENT_TIMESTAMP
+            """, (
+                event_data['title'],
+                event_date_str,
+                event_time_str,
+                event_data['location'],
+                event_data['url'],
+                event_data['description'],
+                event_data['category'],
+                event_data['source'],
+                event_data['price']
+            ))
+            conn.commit()
+            return cur.lastrowid
+        except Exception as e:
+            conn.rollback()
+            print(f"Error inserting event: {e}")
+            return None
+
+Update app.py:
+
+Update the date/time parsing in the index route:
+python
+
+@app.route('/')
+def index():
+    """Main page displaying events"""
+    events = get_all_events()
+    
+    # Add color and SF indicator to each event
+    for event in events:
+        event['color'] = CATEGORY_COLORS.get(event['category'], '#CCCCCC')
+        event['is_sf'] = is_sf_location(event.get('location', ''))
+        
+        # Parse date/time strings for display
+        if event.get('event_date'):
+            if isinstance(event['event_date'], str):
+                try:
+                    event['event_date'] = datetime.strptime(event['event_date'], '%Y-%m-%d').date()
+                except:
+                    pass
+        
+        if event.get('event_time'):
+            if isinstance(event['event_time'], str):
+                try:
+                    event['event_time'] = datetime.strptime(event['event_time'], '%H:%M:%S').time()
+                except:
+                    try:
+                        event['event_time'] = datetime.strptime(event['event_time'], '%H:%M:%S.%f').time()
+                    except:
+                        pass
+    
+    # Group by category
+    events_by_category = {}
+    for event in events:
+        category = event['category']
+        if category not in events_by_category:
+            events_by_category[category] = []
+        events_by_category[category].append(event)
+    
+    # Export to JSON in background
+    Thread(target=export_to_json, args=(events,)).start()
+    
+    return render_template('index.html', 
+                         events_by_category=events_by_category,
+                         category_colors=CATEGORY_COLORS)
+
+Quick Fix Steps:
+
+    Delete the old database:
+
+powershell
+
+   del events.db
+
+    Update the three files above (schema.sql, db_helper.py, app.py)
+    Reinitialize the database:
+
+powershell
+
+   python -c "from database.db_helper import init_db; init_db()"
+
+    Run the scraper again:
+
+powershell
+
+   python -c "from scrapers.scraper import run_all_scrapers; run_all_scrapers()"
+
+    Start the app:
+
+powershell
+
+   python app.py
+
+About the "0 events from Agenda Hero" issue:
+
+This is likely because the Agenda Hero scraper needs adjusted selectors. Once the database error is fixed, we can debug that separately. The Gary's Guide scraper should be working though!
+
+Let me know if you hit any other errors!
+
