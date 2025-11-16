@@ -262,6 +262,103 @@
             font-size: 14px;
             color: #666;
         }
+        
+        .date-filter {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .date-filter-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .date-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .date-btn {
+            padding: 8px 15px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .date-btn:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+        }
+        
+        .date-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .date-slider-container {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .date-slider-container.show {
+            display: block;
+        }
+        
+        .slider-row {
+            margin-bottom: 15px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .slider-label strong {
+            color: #333;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -307,6 +404,34 @@
                 
                 <div class="stats" id="stats">
                     Showing all events
+                </div>
+                
+                <div class="date-filter">
+                    <span class="date-filter-label">📅 Date Range:</span>
+                    <div class="date-buttons">
+                        <button class="date-btn active" onclick="setDateFilter('1week')">1 Week</button>
+                        <button class="date-btn" onclick="setDateFilter('2weeks')">2 Weeks</button>
+                        <button class="date-btn" onclick="toggleCustomDateRange()">Custom Range</button>
+                    </div>
+                    
+                    <div class="date-slider-container" id="customDateRange">
+                        <div class="slider-row">
+                            <div class="slider-label">
+                                <strong>Start Date:</strong>
+                                <span id="startDateLabel">Today</span>
+                            </div>
+                            <input type="range" id="startDateSlider" min="0" max="60" value="0" 
+                                   oninput="updateDateRange()">
+                        </div>
+                        <div class="slider-row">
+                            <div class="slider-label">
+                                <strong>End Date:</strong>
+                                <span id="endDateLabel">+7 days</span>
+                            </div>
+                            <input type="range" id="endDateSlider" min="0" max="60" value="7" 
+                                   oninput="updateDateRange()">
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -378,8 +503,88 @@
             category: 'all',
             location: 'all',
             source: 'all',
-            search: ''
+            search: '',
+            dateRange: '1week',
+            customStartDays: 0,
+            customEndDays: 7
         };
+        
+        // Calculate date for filtering
+        function getDateFromDaysOffset(daysOffset) {
+            const date = new Date();
+            date.setDate(date.getDate() + daysOffset);
+            return date;
+        }
+        
+        function formatDateLabel(daysOffset) {
+            if (daysOffset === 0) return 'Today';
+            const date = getDateFromDaysOffset(daysOffset);
+            const month = date.toLocaleDateString('en-US', { month: 'short' });
+            const day = date.getDate();
+            return `${month} ${day}`;
+        }
+        
+        function setDateFilter(range) {
+            currentFilters.dateRange = range;
+            
+            // Update button states
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hide custom range if preset selected
+            if (range !== 'custom') {
+                document.getElementById('customDateRange').classList.remove('show');
+            }
+            
+            applyFilters();
+        }
+        
+        function toggleCustomDateRange() {
+            const container = document.getElementById('customDateRange');
+            const isShown = container.classList.contains('show');
+            
+            // Update button states
+            document.querySelectorAll('.date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (!isShown) {
+                container.classList.add('show');
+                event.target.classList.add('active');
+                currentFilters.dateRange = 'custom';
+                applyFilters();
+            } else {
+                container.classList.remove('show');
+                // Revert to 1 week
+                currentFilters.dateRange = '1week';
+                document.querySelector('.date-btn[onclick*="1week"]').classList.add('active');
+                applyFilters();
+            }
+        }
+        
+        function updateDateRange() {
+            const startDays = parseInt(document.getElementById('startDateSlider').value);
+            const endDays = parseInt(document.getElementById('endDateSlider').value);
+            
+            // Ensure end is after start
+            if (endDays <= startDays) {
+                document.getElementById('endDateSlider').value = startDays + 1;
+                return updateDateRange();
+            }
+            
+            currentFilters.customStartDays = startDays;
+            currentFilters.customEndDays = endDays;
+            
+            // Update labels
+            document.getElementById('startDateLabel').textContent = formatDateLabel(startDays);
+            document.getElementById('endDateLabel').textContent = formatDateLabel(endDays);
+            
+            if (currentFilters.dateRange === 'custom') {
+                applyFilters();
+            }
+        }
         
         function toggleDetails(card) {
             const details = card.querySelector('.event-details');
@@ -451,6 +656,22 @@
             const categoryFilter = currentFilters.category;
             const locationFilter = currentFilters.location;
             
+            // Calculate date range
+            let startDate, endDate;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (currentFilters.dateRange === '1week') {
+                startDate = today;
+                endDate = getDateFromDaysOffset(6);
+            } else if (currentFilters.dateRange === '2weeks') {
+                startDate = today;
+                endDate = getDateFromDaysOffset(13);
+            } else if (currentFilters.dateRange === 'custom') {
+                startDate = getDateFromDaysOffset(currentFilters.customStartDays);
+                endDate = getDateFromDaysOffset(currentFilters.customEndDays);
+            }
+            
             let visibleCount = 0;
             let totalCount = 0;
             
@@ -474,6 +695,16 @@
                     const detailsText = details ? details.textContent.toLowerCase() : '';
                     const hasSFBadge = card.querySelector('.sf-badge') !== null;
                     
+                    // Extract event date from card
+                    const dateText = meta.match(/📅\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})/);
+                    let matchesDate = true;
+                    
+                    if (dateText && dateText[1]) {
+                        const eventDate = new Date(dateText[1]);
+                        eventDate.setHours(0, 0, 0, 0);
+                        matchesDate = eventDate >= startDate && eventDate <= endDate;
+                    }
+                    
                     // Check search filter
                     const matchesSearch = !searchTerm || 
                         title.includes(searchTerm) || 
@@ -485,7 +716,7 @@
                         (locationFilter === 'sf' && hasSFBadge);
                     
                     // Show/hide card
-                    if (matchesSearch && matchesLocation) {
+                    if (matchesSearch && matchesLocation && matchesDate) {
                         card.classList.remove('hidden');
                         visibleCount++;
                         sectionHasVisible = true;
@@ -517,6 +748,17 @@
             const stats = document.getElementById('stats');
             let text = `Showing ${visible} of ${total} events`;
             
+            // Add date range to stats
+            if (currentFilters.dateRange === '1week') {
+                text += ` (next 7 days)`;
+            } else if (currentFilters.dateRange === '2weeks') {
+                text += ` (next 14 days)`;
+            } else if (currentFilters.dateRange === 'custom') {
+                const start = formatDateLabel(currentFilters.customStartDays);
+                const end = formatDateLabel(currentFilters.customEndDays);
+                text += ` (${start} to ${end})`;
+            }
+            
             if (currentFilters.search) {
                 text += ` matching "${currentFilters.search}"`;
             }
@@ -532,10 +774,8 @@
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            updateStats(
-                document.querySelectorAll('.event-card').length,
-                document.querySelectorAll('.event-card').length
-            );
+            // Apply default 1-week filter
+            applyFilters();
         });
     </script>
 </body>

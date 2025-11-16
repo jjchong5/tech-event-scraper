@@ -27,7 +27,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -43,7 +43,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -59,7 +59,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -75,7 +75,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -91,7 +91,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -107,7 +107,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -123,7 +123,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:02",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -160,22 +160,6 @@
     "is_sf": false
   },
   {
-    "id": 3,
-    "title": "AI For Social Good Hackathon",
-    "event_date": "2025-11-15",
-    "event_time": "08:00:00",
-    "location": "Free",
-    "url": "https://www.garysguide.comhttps://www.garysguide.com/events/yzfbyak/AI-For-Social-Good-Hackathon",
-    "description": "",
-    "category": "hackathon",
-    "source": "Gary's Guide",
-    "price": "Free",
-    "created_at": "2025-11-15 22:36:34",
-    "updated_at": "2025-11-15 23:28:01",
-    "color": "#FF6B6B",
-    "is_sf": false
-  },
-  {
     "id": 147,
     "title": "TanStack Start Hackathon",
     "event_date": "2026-10-26",
@@ -187,25 +171,9 @@
     "source": "Agenda Hero",
     "price": "Free",
     "created_at": "2025-11-15 23:28:03",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#FF6B6B",
     "is_sf": true
-  },
-  {
-    "id": 23,
-    "title": "SF AI Engineers - Nov w/ Anyscale, Parable & Fable Security Presenting",
-    "event_date": "2025-11-15",
-    "event_time": "00:00:00",
-    "location": "",
-    "url": "https://www.garysguide.comhttps://www.garysguide.com/events/ehnsdu3/SF-AI-Engineers-Nov-w-Anyscale-Parable-Fable-Security-Presenting",
-    "description": "",
-    "category": "other",
-    "source": "Gary's Guide",
-    "price": "Free",
-    "created_at": "2025-11-15 22:36:34",
-    "updated_at": "2025-11-15 22:45:46",
-    "color": "#CCCCCC",
-    "is_sf": false
   },
   {
     "id": 10,
@@ -222,6 +190,22 @@
     "updated_at": "2025-11-15 23:28:02",
     "color": "#CCCCCC",
     "is_sf": false
+  },
+  {
+    "id": 148,
+    "title": "Introduction to Artificial Intelligence (AI)",
+    "event_date": "2025-11-18",
+    "event_time": "17:00:00",
+    "location": "San Francisco, CA",
+    "url": "https://www.eventbrite.com/e/introduction-to-artificial-intelligence-ai-tickets-1860442265899?aff=ebdssbdestsearch",
+    "description": "",
+    "category": "other",
+    "source": "Eventbrite",
+    "price": "$0.00",
+    "created_at": "2025-11-15 23:46:16",
+    "updated_at": "2025-11-15 23:46:16",
+    "color": "#CCCCCC",
+    "is_sf": true
   },
   {
     "id": 127,
@@ -267,7 +251,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -283,7 +267,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -331,7 +315,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -347,7 +331,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -363,7 +347,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -379,7 +363,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -395,7 +379,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -411,7 +395,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -427,7 +411,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -779,7 +763,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:16",
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -795,7 +779,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -811,7 +795,7 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-15 23:28:03",
+    "updated_at": "2025-11-15 23:46:17",
     "color": "#C7CEEA",
     "is_sf": true
   },
