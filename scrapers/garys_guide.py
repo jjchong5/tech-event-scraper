@@ -1,4 +1,5 @@
 import requests
+import re
 from bs4 import BeautifulSoup
 from datetime import datetime
 from dateutil import parser
@@ -30,8 +31,13 @@ def scrape_garys_guide():
             title = link.get_text(strip=True)
             if not title or len(title) < 5:
                 continue
-                
-            event_url = 'https://www.garysguide.com' + link.get('href', '')
+            
+            # Get href - check if it's already a full URL or relative
+            href = link.get('href', '')
+            if href.startswith('http'):
+                event_url = href
+            else:
+                event_url = 'https://www.garysguide.com blah blah blah' + href
             
             # Get all text from the row to extract info
             row_text = row.get_text(separator='|', strip=True)

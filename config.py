@@ -10,11 +10,11 @@ class Config:
         'hackathon': ['hackathon', 'hack night', 'hacknight', 'buildathon'],
         'coding_hangout': ['meetup', 'coworking', 'coffee', 'networking', 'hangout', 'social'],
         'marketing': ['marketing', 'growth', 'seo', 'content', 'branding'],
-        'demo': ['demo day', 'demo', 'pitch day', 'showcase', 'product launch'],
+        'demo': ['demo day', 'demo', 'pitch day', 'showcase', 'product launch', 'hands-on', 'workshop'],
         'vc_pitch': ['vc', 'venture capital', 'founder', 'investors', 'pitch', 'funding']
     }
     
     # SF location keywords
-    SF_LOCATIONS = ['san francisco', 'sf', 'soma', 'mission', 'hayes valley', 
+    SF_LOCATIONS = ['san francisco', 'civic center', 'sf', 'soma', 'mission', 'hayes valley', 
                     'financial district', 'fidi', 'tenderloin', 'nob hill',
                     'castro', 'marina', 'pac heights', 'russian hill']
