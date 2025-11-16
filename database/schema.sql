@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS events (
     category VARCHAR(50),
     source VARCHAR(100),
     price VARCHAR(100),
+    is_virtual INTEGER DEFAULT 0,  -- 0 = in-person, 1 = virtual/online
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(title, event_date)

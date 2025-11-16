@@ -14,7 +14,20 @@ class Config:
         'vc_pitch': ['vc', 'venture capital', 'founder', 'investors', 'pitch', 'funding']
     }
     
-    # SF location keywords
-    SF_LOCATIONS = ['san francisco', 'civic center', 'sf', 'soma', 'mission', 'hayes valley', 
+    # SF location keywords (city proper only)
+    SF_LOCATIONS = ['san francisco', 'civic center', 'soma', 'mission', 'hayes valley', 
                     'financial district', 'fidi', 'tenderloin', 'nob hill',
-                    'castro', 'marina', 'pac heights', 'russian hill']
+                    'castro', 'marina', 'pac heights', 'russian hill', 'north beach',
+                    'potrero hill', 'dogpatch', 'haight', 'inner sunset', 'outer sunset',
+                    'richmond district', 'presidio', 'embarcadero', 'jackson square']
+    
+    # Non-SF Bay Area cities to exclude
+    NON_SF_CITIES = ['oakland', 'berkeley', 'palo alto', 'mountain view', 'san jose',
+                     'sunnyvale', 'santa clara', 'cupertino', 'redwood city', 'menlo park',
+                     'san mateo', 'south san francisco', 'daly city', 'fremont', 'hayward',
+                     'milpitas', 'san leandro', 'alameda', 'emeryville']
+    
+    # Virtual event keywords
+    VIRTUAL_KEYWORDS = ['virtual', 'online', 'remote', 'zoom', 'webinar', 'livestream', 
+                        'live stream', 'video call', 'video conference', 'virtual event',
+                        'online event', 'remote event', 'hybrid']

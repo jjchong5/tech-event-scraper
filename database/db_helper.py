@@ -30,12 +30,15 @@ def insert_event(event_data):
             event_date_str = str(event_data['event_date']) if event_data.get('event_date') else None
             event_time_str = str(event_data['event_time']) if event_data.get('event_time') else None
             
+            is_virtual = 1 if event_data.get('is_virtual', False) else 0
+            
             cur.execute("""
                 INSERT INTO events (title, event_date, event_time, location, url, 
-                                  description, category, source, price)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                  description, category, source, price, is_virtual)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(title, event_date) DO UPDATE 
-                SET updated_at = CURRENT_TIMESTAMP
+                SET updated_at = CURRENT_TIMESTAMP,
+                    is_virtual = excluded.is_virtual
             """, (
                 event_data['title'],
                 event_date_str,
@@ -45,7 +48,8 @@ def insert_event(event_data):
                 event_data['description'],
                 event_data['category'],
                 event_data['source'],
-                event_data['price']
+                event_data['price'],
+                is_virtual
             ))
             conn.commit()
             return cur.lastrowid

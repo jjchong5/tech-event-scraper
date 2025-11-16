@@ -5,7 +5,7 @@ from dateutil import parser
 import time
 import re
 from config import Config
-from scrapers.categorizer import categorize_event
+from scrapers.categorizer import categorize_event, is_virtual_event
 
 def scrape_cerebral_valley():
     """Scrape events from Cerebral Valley using undetected-chromedriver"""
@@ -140,6 +140,7 @@ def scrape_cerebral_valley():
                 # Only add if we have a date
                 if event_date:
                     category = categorize_event(title)
+                    is_virtual = is_virtual_event(title, '', location)
                     
                     events.append({
                         'title': title,
@@ -150,7 +151,8 @@ def scrape_cerebral_valley():
                         'description': '',
                         'category': category,
                         'source': 'Cerebral Valley',
-                        'price': 'Free'
+                        'price': 'Free',
+                        'is_virtual': is_virtual
                     })
                     seen_titles.add(title)
                     

@@ -5,7 +5,7 @@ from dateutil import parser
 import time
 import re
 from config import Config
-from scrapers.categorizer import categorize_event
+from scrapers.categorizer import categorize_event, is_virtual_event
 
 def scrape_agenda_hero():
     """Scrape events from Agenda Hero SF/Bay Area AI Events using undetected-chromedriver
@@ -137,6 +137,7 @@ def scrape_agenda_hero():
             event_url = url
             
             category = categorize_event(title)
+            is_virtual = is_virtual_event(title, '', location)
             
             events.append({
                 'title': title,
@@ -147,7 +148,8 @@ def scrape_agenda_hero():
                 'description': '',
                 'category': category,
                 'source': 'Agenda Hero',
-                'price': 'Free'
+                'price': 'Free',
+                'is_virtual': is_virtual
             })
             processed_titles.add(title)
         

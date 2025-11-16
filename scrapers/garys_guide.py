@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from dateutil import parser
 from config import Config
-from scrapers.categorizer import categorize_event
+from scrapers.categorizer import categorize_event, is_virtual_event
 
 def scrape_garys_guide():
     """Scrape events from Gary's Guide"""
@@ -105,6 +105,9 @@ def scrape_garys_guide():
             # Categorize
             category = categorize_event(title, description)
             
+            # Check if virtual
+            is_virtual = is_virtual_event(title, description, location)
+            
             if event_date:  # Only add if we have a date
                 events.append({
                     'title': title,
@@ -115,7 +118,8 @@ def scrape_garys_guide():
                     'description': description,
                     'category': category,
                     'source': 'Gary\'s Guide',
-                    'price': price
+                    'price': price,
+                    'is_virtual': is_virtual
                 })
             
         except Exception as e:

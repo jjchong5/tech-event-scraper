@@ -5,7 +5,7 @@ from dateutil import parser
 import time
 import re
 from config import Config
-from scrapers.categorizer import categorize_event
+from scrapers.categorizer import categorize_event, is_virtual_event
 
 def _scrape_luma_calendar(url, source_name):
     """Generic Luma calendar scraper using undetected-chromedriver
@@ -136,6 +136,7 @@ def _scrape_luma_calendar(url, source_name):
                 # Only add if we have a date
                 if event_date:
                     category = categorize_event(title)
+                    is_virtual = is_virtual_event(title, '', location)
                     
                     events.append({
                         'title': title,
@@ -146,7 +147,8 @@ def _scrape_luma_calendar(url, source_name):
                         'description': '',
                         'category': category,
                         'source': source_name,
-                        'price': 'Free'
+                        'price': 'Free',
+                        'is_virtual': is_virtual
                     })
                     seen_titles.add(title)
                     

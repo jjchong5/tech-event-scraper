@@ -254,6 +254,22 @@
             border-color: #007bff;
         }
         
+        .virtual-dropdown {
+            padding: 5px 10px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+            transition: all 0.2s;
+        }
+        
+        .virtual-dropdown:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
         .hidden {
             display: none !important;
         }
@@ -642,8 +658,13 @@
                 <div class="filter-group">
                     <span class="filter-label">Filter:</span>
                     <button class="filter-btn active" onclick="filterByCategory('all')">All Events</button>
-                    <button class="filter-btn" onclick="filterByLocation('sf')">SF Only</button>
-                    <button class="filter-btn" onclick="filterBySource('all')">All Sources</button>
+                    <button class="filter-btn" onclick="filterByLocation('sf')">🌉 SF Only</button>
+                    
+                    <select class="virtual-dropdown" onchange="filterByVirtual(this.value)">
+                        <option value="non-virtual">🚶 In-Person</option>
+                        <option value="virtual">🖥️ Virtual</option>
+                        <option value="all">All</option>
+                    </select>
                     {% for category in category_colors.keys() %}
                     <button class="filter-btn" onclick="filterByCategory('{{ category }}')">
                         {{ category.replace('_', ' ').title() }}
@@ -715,7 +736,7 @@
                 </thead>
                 <tbody>
                     {% for event in events %}
-                    <tr class="expandable" onclick="toggleTableRow(this)" data-category="{{ category }}">
+                    <tr class="expandable" onclick="toggleTableRow(this)" data-category="{{ category }}" data-virtual="{{ '1' if event.is_virtual else '0' }}">
                         <td class="table-expand-cell">
                             <span class="expand-icon">▶</span>
                         </td>
@@ -779,7 +800,8 @@
             search: '',
             dateRange: '1week',
             customStartDays: 0,
-            customEndDays: 7
+            customEndDays: 7,
+            virtual: 'non-virtual'  // Default to non-virtual (in-person) events
         };
         
         // Calculate date for filtering
@@ -935,6 +957,11 @@
             applyFilters();
         }
         
+        function filterByVirtual(virtualType) {
+            currentFilters.virtual = virtualType;
+            applyFilters();
+        }
+        
         function applyFilters() {
             const searchTerm = currentFilters.search;
             const categoryFilter = currentFilters.category;
@@ -1008,8 +1035,19 @@
                     const matchesLocation = locationFilter === 'all' || 
                         (locationFilter === 'sf' && hasSFBadge);
                     
+                    // Check virtual filter
+                    const isVirtual = row.getAttribute('data-virtual') === '1';
+                    const virtualFilter = currentFilters.virtual;
+                    let matchesVirtual = true;
+                    if (virtualFilter === 'virtual') {
+                        matchesVirtual = isVirtual;
+                    } else if (virtualFilter === 'non-virtual') {
+                        matchesVirtual = !isVirtual;
+                    }
+                    // 'all' matches everything
+                    
                     // Show/hide row and its details
-                    if (matchesSearch && matchesLocation && matchesDate) {
+                    if (matchesSearch && matchesLocation && matchesDate && matchesVirtual) {
                         row.classList.remove('hidden');
                         if (detailsRow && detailsRow.classList.contains('table-details-row')) {
                             detailsRow.classList.remove('hidden');

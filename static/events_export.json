@@ -12,6 +12,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -27,7 +28,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": false
   },
@@ -44,6 +46,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -59,7 +62,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -76,6 +80,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -92,6 +97,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -107,7 +113,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -123,7 +130,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -140,6 +148,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -156,6 +165,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -172,6 +182,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -187,7 +198,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -203,7 +215,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -219,7 +232,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -235,7 +249,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -251,7 +266,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": true
   },
@@ -267,7 +283,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": false
   },
@@ -283,7 +300,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": false
   },
@@ -299,7 +317,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": false
   },
@@ -316,6 +335,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#4ECDC4",
     "is_sf": false
   },
@@ -332,6 +352,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#95E1D3",
     "is_sf": true
   },
@@ -348,6 +369,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#95E1D3",
     "is_sf": true
   },
@@ -363,7 +385,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#95E1D3",
     "is_sf": true
   },
@@ -380,6 +403,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#95E1D3",
     "is_sf": true
   },
@@ -396,6 +420,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#95E1D3",
     "is_sf": true
   },
@@ -412,6 +437,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -428,6 +454,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -444,6 +471,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -460,6 +488,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -476,6 +505,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -492,6 +522,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -507,7 +538,8 @@
     "source": "Agenda Hero",
     "price": "Free",
     "created_at": "2025-11-15 23:28:03",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": true
   },
@@ -523,7 +555,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:43",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#FF6B6B",
     "is_sf": false
   },
@@ -539,7 +572,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#FFE66D",
     "is_sf": true
   },
@@ -555,7 +589,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#FFE66D",
     "is_sf": true
   },
@@ -572,6 +607,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#FFE66D",
     "is_sf": true
   },
@@ -588,6 +624,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -604,6 +641,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -619,7 +657,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -635,7 +674,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -652,6 +692,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -667,7 +708,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -684,6 +726,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -699,7 +742,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -716,6 +760,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -731,7 +776,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -747,7 +793,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -764,6 +811,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -780,6 +828,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -796,6 +845,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -811,7 +861,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -828,6 +879,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -844,6 +896,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -860,6 +913,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -876,6 +930,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -892,6 +947,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -907,7 +963,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -923,7 +980,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -939,7 +997,8 @@
     "source": "Eventbrite",
     "price": "$0.00",
     "created_at": "2025-11-15 23:46:16",
-    "updated_at": "2025-11-16 05:06:41",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -955,7 +1014,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -971,7 +1031,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -987,7 +1048,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1004,6 +1066,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1020,6 +1083,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1036,6 +1100,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1052,6 +1117,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1067,7 +1133,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1084,6 +1151,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1100,6 +1168,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1116,6 +1185,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1132,6 +1202,7 @@
     "price": "Free",
     "created_at": "2025-11-15 23:28:02",
     "updated_at": "2025-11-15 23:28:02",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1147,7 +1218,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-16 01:50:19",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1163,7 +1235,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1180,6 +1253,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1196,6 +1270,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1211,7 +1286,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1228,6 +1304,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1244,6 +1321,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1260,6 +1338,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1276,6 +1355,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1292,6 +1372,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1308,6 +1389,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1323,7 +1405,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1340,6 +1423,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1355,7 +1439,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-16 05:06:41",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1372,6 +1457,7 @@
     "price": "CA$0.00",
     "created_at": "2025-11-15 22:54:18",
     "updated_at": "2025-11-16 06:10:58",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1387,7 +1473,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1404,6 +1491,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1420,6 +1508,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1436,6 +1525,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1451,7 +1541,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1467,7 +1558,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1484,6 +1576,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1499,7 +1592,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1515,7 +1609,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1532,6 +1627,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1548,6 +1644,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1564,6 +1661,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1580,6 +1678,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1595,7 +1694,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1612,6 +1712,7 @@
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
     "updated_at": "2025-11-16 06:10:58",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1628,6 +1729,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1644,6 +1746,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1659,7 +1762,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1675,7 +1779,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1692,6 +1797,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1708,6 +1814,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1723,7 +1830,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 01:53:44",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1739,7 +1847,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 01:55:19",
+    "updated_at": "2025-11-16 07:52:30",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1756,6 +1865,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
     "updated_at": "2025-11-15 22:54:18",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1771,7 +1881,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1788,6 +1899,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1804,6 +1916,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1819,7 +1932,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1835,7 +1949,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1851,7 +1966,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1867,7 +1983,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1883,7 +2000,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1900,6 +2018,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:11:00",
     "updated_at": "2025-11-16 06:11:00",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1915,7 +2034,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -1931,7 +2051,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -1947,7 +2068,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:17",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -1963,7 +2085,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -1979,7 +2102,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -1995,7 +2119,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:17",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2011,7 +2136,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:17",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2027,7 +2153,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:17",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2043,7 +2170,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:17",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2059,7 +2187,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2075,7 +2204,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2091,7 +2221,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2107,7 +2238,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2123,7 +2255,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2139,7 +2272,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2155,7 +2289,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2171,7 +2306,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2187,7 +2323,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2204,6 +2341,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2220,6 +2358,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2236,6 +2375,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2251,7 +2391,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2268,6 +2409,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2283,7 +2425,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:43",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2300,6 +2443,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2316,6 +2460,7 @@
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
     "updated_at": "2025-11-16 06:10:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": true
   },
@@ -2331,7 +2476,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2347,7 +2493,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2364,6 +2511,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2380,6 +2528,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2395,7 +2544,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2412,6 +2562,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2427,7 +2578,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2444,6 +2596,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2459,7 +2612,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:43",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2476,6 +2630,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#CCCCCC",
     "is_sf": false
   },
@@ -2491,7 +2646,8 @@
     "source": "Cerebral Valley",
     "price": "Free",
     "created_at": "2025-11-16 06:10:59",
-    "updated_at": "2025-11-16 06:10:59",
+    "updated_at": "2025-11-16 08:00:00",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -2507,7 +2663,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -2523,7 +2680,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -2539,7 +2697,8 @@
     "source": "Eventbrite",
     "price": "Free",
     "created_at": "2025-11-15 22:54:18",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": true
   },
@@ -2555,7 +2714,8 @@
     "source": "Gary's Guide",
     "price": "Free",
     "created_at": "2025-11-16 01:53:44",
-    "updated_at": "2025-11-16 06:10:58",
+    "updated_at": "2025-11-16 07:59:59",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": false
   },
@@ -2572,6 +2732,7 @@
     "price": "Free",
     "created_at": "2025-11-15 22:36:34",
     "updated_at": "2025-11-15 22:45:46",
+    "is_virtual": 0,
     "color": "#C7CEEA",
     "is_sf": false
   }

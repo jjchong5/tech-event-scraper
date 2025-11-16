@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify
 from database.db_helper import get_all_events, init_db
 from scrapers.scraper import run_all_scrapers
-from scrapers.categorizer import is_sf_location
+from scrapers.categorizer import is_sf_location, is_virtual_event
 import json
 from datetime import datetime
 from threading import Thread
@@ -50,10 +50,17 @@ def index():
     """Main page displaying events"""
     events = get_all_events()
     
-    # Add color and SF indicator to each event
+    # Add color, SF indicator, and virtual flag to each event
     for event in events:
         event['color'] = CATEGORY_COLORS.get(event['category'], '#CCCCCC')
         event['is_sf'] = is_sf_location(event.get('location', ''))
+        # Check if is_virtual is in database, otherwise detect it
+        if event.get('is_virtual') is None:
+            event['is_virtual'] = is_virtual_event(
+                event.get('title', ''),
+                event.get('description', ''),
+                event.get('location', '')
+            )
         
         # Parse date/time strings for display
         if event.get('event_date'):

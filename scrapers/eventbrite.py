@@ -4,7 +4,7 @@ from datetime import datetime
 from dateutil import parser
 import re
 from config import Config
-from scrapers.categorizer import categorize_event
+from scrapers.categorizer import categorize_event, is_virtual_event
 
 def scrape_eventbrite():
     """Scrape tech events from Eventbrite San Francisco"""
@@ -119,6 +119,7 @@ def scrape_eventbrite():
                         price = price_match.group(0)
             
             category = categorize_event(title, description)
+            is_virtual = is_virtual_event(title, description, location)
             
             # Only add events with dates
             if event_date:
@@ -131,7 +132,8 @@ def scrape_eventbrite():
                     'description': description,
                     'category': category,
                     'source': 'Eventbrite',
-                    'price': price
+                    'price': price,
+                    'is_virtual': is_virtual
                 })
                 seen_titles.add(title)
             
