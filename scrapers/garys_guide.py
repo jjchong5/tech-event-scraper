@@ -34,10 +34,10 @@ def scrape_garys_guide():
             
             # Get href - check if it's already a full URL or relative
             href = link.get('href', '')
-            if href.startswith('http'):
+            if href.startswith(('http','www.garysguide.com')):
                 event_url = href
             else:
-                event_url = 'https://www.garysguide.com blah blah blah' + href
+                event_url = 'https://www.garysguide.com' + href
             
             # Get all text from the row to extract info
             row_text = row.get_text(separator='|', strip=True)
