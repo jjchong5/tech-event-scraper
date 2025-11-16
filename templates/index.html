@@ -264,6 +264,249 @@
             color: #666;
         }
         
+        .view-switcher {
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .view-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .view-btn {
+            padding: 6px 12px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #333;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .view-btn:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+        }
+        
+        .view-btn.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .view-btn svg {
+            opacity: 0.8;
+        }
+        
+        /* Table View Styles - Airtable inspired */
+        .events-table-container {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .table-category-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .table-category-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .table-category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            text-transform: capitalize;
+        }
+        
+        .table-event-count {
+            color: #999;
+            font-size: 14px;
+            margin-left: auto;
+        }
+        
+        .events-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .events-table thead {
+            background: #fafafa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .events-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .events-table tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.15s;
+        }
+        
+        .events-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .events-table tbody tr.expandable {
+            cursor: pointer;
+        }
+        
+        .events-table td {
+            padding: 14px 16px;
+            font-size: 14px;
+            color: #333;
+            vertical-align: middle;
+        }
+        
+        .table-title-cell {
+            font-weight: 500;
+            max-width: 400px;
+        }
+        
+        .table-title-cell a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .table-title-cell a:hover {
+            color: #007bff;
+        }
+        
+        .table-date-cell {
+            white-space: nowrap;
+            color: #555;
+            min-width: 120px;
+        }
+        
+        .table-time-cell {
+            white-space: nowrap;
+            color: #666;
+            min-width: 90px;
+        }
+        
+        .table-location-cell {
+            color: #666;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .table-source-cell {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .table-price-cell {
+            white-space: nowrap;
+            font-weight: 500;
+            color: #28a745;
+        }
+        
+        .table-expand-cell {
+            width: 40px;
+            text-align: center;
+        }
+        
+        .expand-icon {
+            color: #999;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+        
+        .table-details-row {
+            display: none;
+            background: #f8f9fa;
+        }
+        
+        .table-details-row.show {
+            display: table-row;
+        }
+        
+        .table-details-content {
+            padding: 20px;
+            border-left: 4px solid;
+        }
+        
+        .table-details-content p {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .table-details-content strong {
+            color: #555;
+            margin-right: 8px;
+        }
+        
+        .table-sf-badge {
+            background: #28a745;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        /* Responsive table */
+        @media (max-width: 1200px) {
+            .table-source-cell {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .table-location-cell {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .table-time-cell {
+                display: none;
+            }
+            
+            .events-table th,
+            .events-table td {
+                padding: 10px 12px;
+            }
+        }
+        
         .date-filter {
             margin-top: 15px;
             padding: 15px;
@@ -408,6 +651,14 @@
                     Showing all events
                 </div>
                 
+                <!-- View switcher disabled - using table view as primary
+                <div class="view-switcher">
+                    <span class="view-label">View:</span>
+                    <button class="view-btn active" onclick="switchView('card')">Cards</button>
+                    <button class="view-btn" onclick="switchView('list')">List</button>
+                </div>
+                -->
+                
                 <div class="date-filter">
                     <span class="date-filter-label">📅 Date Range:</span>
                     <div class="date-buttons">
@@ -439,56 +690,72 @@
         </header>
         
         {% for category, events in events_by_category.items() %}
-        <div class="category-section">
-            <div class="category-header">
-                <div class="category-indicator" style="background: {{ category_colors[category] }}"></div>
-                <h2 class="category-title">{{ category.replace('_', ' ') }}</h2>
-                <span class="event-count">({{ events|length }} events)</span>
+        <div class="events-table-container">
+            <div class="table-category-header">
+                <div class="table-category-indicator" style="background: {{ category_colors[category] }}"></div>
+                <h2 class="table-category-title">{{ category.replace('_', ' ') }}</h2>
+                <span class="table-event-count">{{ events|length }} events</span>
             </div>
             
-            {% for event in events %}
-            <div class="event-card" style="border-left-color: {{ event.color }}" onclick="toggleDetails(this)">
-                <div class="event-header">
-                    <div class="event-title">
-                        <a href="{{ event.url }}" target="_blank" onclick="event.stopPropagation()">
-                            {{ event.title }}
-                        </a>
-                        {% if event.is_sf %}
-                        <span class="sf-badge">SF</span>
-                        {% endif %}
-                    </div>
-                </div>
-                
-                <div class="event-meta">
-                    <div class="meta-item">
-                        📅 {{ event.event_date.strftime('%b %d, %Y') if event.event_date else 'TBD' }}
-                    </div>
-                    {% if event.event_time %}
-                    <div class="meta-item">
-                        🕐 {{ event.event_time.strftime('%I:%M %p') }}
-                    </div>
-                    {% endif %}
-                    <div class="meta-item">
-                        🏢 {{ event.source }}
-                    </div>
-                    {% if event.price %}
-                    <div class="meta-item">
-                        💵 {{ event.price }}
-                    </div>
-                    {% endif %}
-                </div>
-                
-                <div class="event-details">
-                    {% if event.location %}
-                    <p><strong>Location:</strong> {{ event.location }}</p>
-                    {% endif %}
-                    {% if event.description %}
-                    <p><strong>Description:</strong> {{ event.description }}</p>
-                    {% endif %}
-                    <p><strong>Link:</strong> <a href="{{ event.url }}" target="_blank">{{ event.url }}</a></p>
-                </div>
-            </div>
-            {% endfor %}
+            <table class="events-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"></th>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th class="table-time-cell">Time</th>
+                        <th class="table-location-cell">Location</th>
+                        <th class="table-source-cell">Source</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr class="expandable" onclick="toggleTableRow(this)" data-category="{{ category }}">
+                        <td class="table-expand-cell">
+                            <span class="expand-icon">▶</span>
+                        </td>
+                        <td class="table-title-cell">
+                            <a href="{{ event.url }}" target="_blank" onclick="event.stopPropagation()">
+                                {{ event.title }}
+                                {% if event.is_sf %}
+                                <span class="table-sf-badge">SF</span>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="table-date-cell">
+                            {{ event.event_date.strftime('%b %d, %Y') if event.event_date else 'TBD' }}
+                        </td>
+                        <td class="table-time-cell">
+                            {{ event.event_time.strftime('%I:%M %p') if event.event_time else '-' }}
+                        </td>
+                        <td class="table-location-cell">
+                            {{ event.location if event.location else '-' }}
+                        </td>
+                        <td class="table-source-cell">
+                            {{ event.source }}
+                        </td>
+                        <td class="table-price-cell">
+                            {{ event.price if event.price else 'Free' }}
+                        </td>
+                    </tr>
+                    <tr class="table-details-row">
+                        <td colspan="7">
+                            <div class="table-details-content" style="border-left-color: {{ event.color }}">
+                                {% if event.location %}
+                                <p><strong>📍 Location:</strong> {{ event.location }}</p>
+                                {% endif %}
+                                {% if event.description %}
+                                <p><strong>📄 Description:</strong> {{ event.description }}</p>
+                                {% endif %}
+                                <p><strong>🔗 Link:</strong> <a href="{{ event.url }}" target="_blank">{{ event.url }}</a></p>
+                                <p><strong>🏢 Source:</strong> {{ event.source }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
         {% endfor %}
         
@@ -588,6 +855,17 @@
             }
         }
         
+        function toggleTableRow(row) {
+            const detailsRow = row.nextElementSibling;
+            const expandIcon = row.querySelector('.expand-icon');
+            
+            if (detailsRow && detailsRow.classList.contains('table-details-row')) {
+                detailsRow.classList.toggle('show');
+                expandIcon.classList.toggle('expanded');
+            }
+        }
+        
+        // Old card view function (kept for potential future use)
         function toggleDetails(card) {
             const details = card.querySelector('.event-details');
             details.classList.toggle('show');
@@ -677,68 +955,83 @@
             let visibleCount = 0;
             let totalCount = 0;
             
-            // Filter each category section
-            document.querySelectorAll('.category-section').forEach(section => {
-                const category = section.querySelector('.category-title').textContent.trim().toLowerCase().replace(' ', '_');
-                let sectionHasVisible = false;
+            // Filter each table container (category)
+            document.querySelectorAll('.events-table-container').forEach(container => {
+                const category = container.querySelector('.table-category-title').textContent.trim().toLowerCase().replace(' ', '_');
+                let containerHasVisible = false;
                 
                 // Check if this category should be shown
                 if (categoryFilter !== 'all' && category !== categoryFilter) {
-                    section.classList.add('hidden');
+                    container.classList.add('hidden');
                     return;
                 }
                 
-                // Filter events within category
-                section.querySelectorAll('.event-card').forEach(card => {
+                // Filter table rows within category
+                const rows = container.querySelectorAll('tbody tr.expandable');
+                rows.forEach(row => {
                     totalCount++;
-                    const title = card.querySelector('.event-title').textContent.toLowerCase();
-                    const meta = card.querySelector('.event-meta').textContent.toLowerCase();
-                    const details = card.querySelector('.event-details');
-                    const detailsText = details ? details.textContent.toLowerCase() : '';
-                    const hasSFBadge = card.querySelector('.sf-badge') !== null;
+                    const titleCell = row.querySelector('.table-title-cell');
+                    const title = titleCell ? titleCell.textContent.toLowerCase() : '';
+                    const dateCell = row.querySelector('.table-date-cell');
+                    const dateText = dateCell ? dateCell.textContent : '';
+                    const locationCell = row.querySelector('.table-location-cell');
+                    const locationText = locationCell ? locationCell.textContent.toLowerCase() : '';
+                    const hasSFBadge = row.querySelector('.table-sf-badge') !== null;
                     
-                    // Extract event date from card
-                    const dateText = meta.match(/📅\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})/);
+                    // Get details row for search
+                    const detailsRow = row.nextElementSibling;
+                    const detailsText = detailsRow ? detailsRow.textContent.toLowerCase() : '';
+                    
+                    // Extract event date
                     let matchesDate = true;
-                    
-                    if (dateText && dateText[1]) {
-                        const eventDate = new Date(dateText[1]);
-                        eventDate.setHours(0, 0, 0, 0);
-                        matchesDate = eventDate >= startDate && eventDate <= endDate;
+                    if (startDate && endDate && dateText) {
+                        try {
+                            const eventDate = new Date(dateText);
+                            eventDate.setHours(0, 0, 0, 0);
+                            matchesDate = eventDate >= startDate && eventDate <= endDate;
+                        } catch (e) {
+                            matchesDate = true;
+                        }
                     }
                     
                     // Check search filter
                     const matchesSearch = !searchTerm || 
                         title.includes(searchTerm) || 
-                        meta.includes(searchTerm) || 
+                        locationText.includes(searchTerm) ||
                         detailsText.includes(searchTerm);
                     
                     // Check location filter
                     const matchesLocation = locationFilter === 'all' || 
                         (locationFilter === 'sf' && hasSFBadge);
                     
-                    // Show/hide card
+                    // Show/hide row and its details
                     if (matchesSearch && matchesLocation && matchesDate) {
-                        card.classList.remove('hidden');
+                        row.classList.remove('hidden');
+                        if (detailsRow && detailsRow.classList.contains('table-details-row')) {
+                            detailsRow.classList.remove('hidden');
+                        }
                         visibleCount++;
-                        sectionHasVisible = true;
+                        containerHasVisible = true;
                     } else {
-                        card.classList.add('hidden');
+                        row.classList.add('hidden');
+                        if (detailsRow && detailsRow.classList.contains('table-details-row')) {
+                            detailsRow.classList.add('hidden');
+                        }
                     }
                 });
                 
-                // Show/hide entire section
-                if (sectionHasVisible) {
-                    section.classList.remove('hidden');
+                // Show/hide entire container
+                if (containerHasVisible) {
+                    container.classList.remove('hidden');
                 } else {
-                    section.classList.add('hidden');
+                    container.classList.add('hidden');
                 }
                 
-                // Update event count in section header
-                const visibleInSection = section.querySelectorAll('.event-card:not(.hidden)').length;
-                const countSpan = section.querySelector('.event-count');
+                // Update event count in container header
+                const visibleInContainer = container.querySelectorAll('tbody tr.expandable:not(.hidden)').length;
+                const countSpan = container.querySelector('.table-event-count');
                 if (countSpan) {
-                    countSpan.textContent = `(${visibleInSection} events)`;
+                    countSpan.textContent = `${visibleInContainer} events`;
                 }
             });
             
